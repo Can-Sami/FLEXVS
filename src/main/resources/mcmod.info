@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "flexpremium",
+    "name": "FlexPremium",
+    "description": "FLEX SCRIPTS PREMIUM",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      ""
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
