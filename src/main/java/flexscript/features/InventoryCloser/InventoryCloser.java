@@ -1,4 +1,4 @@
-package flexscript.features;
+package flexscript.features.InventoryCloser;
 
 import flexscript.Main;
 import flexscript.utils.ChatUtils;
@@ -17,11 +17,10 @@ public class InventoryCloser {
 
     @SubscribeEvent
     public void guiOpenEvent(GuiOpenEvent event) {
-        if (Main.farmingMacro) {
-            Container playerContainer = mc.thePlayer.openContainer;
-            if (event.gui instanceof GuiContainer) {
+        if (Main.farmingMacro || Main.blockMacro) {
+            if (Minecraft.getMinecraft().currentScreen == null) {
                 event.setCanceled(true);
-                ChatUtils.sendMessage("§fYou can not open Inventory while the bot is running.");
+                ChatUtils.sendMessage("§fYou can not open menu while the bot is running.");
             }
         }
     }

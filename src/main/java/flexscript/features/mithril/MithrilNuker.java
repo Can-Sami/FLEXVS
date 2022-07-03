@@ -1,7 +1,8 @@
-package flexscript.features;
+package flexscript.features.mithril;
 
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.*;
@@ -81,7 +82,7 @@ public class MithrilNuker {
     }
 
     private BlockPos closestMithril() {
-        int r = 6;
+        int r = 5;
         if (Main.mc.thePlayer == null || Main.mc.theWorld == null) return null;
         BlockPos playerPos = Main.mc.thePlayer.getPosition();
         playerPos = playerPos.add(0, 1, 0);
@@ -124,6 +125,7 @@ public class MithrilNuker {
         } else if(blockState.getBlock() == Blocks.stained_hardened_clay) {
             return true;
         } else if(!Main.configFile.ignoreTitanium && blockState.getBlock() == Blocks.stone && blockState.getValue(BlockStone.VARIANT) == BlockStone.EnumType.DIORITE_SMOOTH) {
+
             return true;
         } else if(blockState.getBlock() == Blocks.gold_block) {
             return true;

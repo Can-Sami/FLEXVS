@@ -6,16 +6,14 @@ import net.minecraft.client.settings.KeyBinding;
 
 import java.util.TimerTask;
 
-public class Shift extends TimerTask {
+public class AttackBind extends TimerTask {
 
     @Override
     public void run() {
-        int left = Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode();
+        int left = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
 
-        long oldTime = System.currentTimeMillis();
 
-        while (System.currentTimeMillis() - oldTime < 500 && Main.farmingMacro) {
-            
+        while (Main.blockMacro  || Main.farmingMacro) {
             KeyBinding.setKeyBindState(left, true);
         }
         KeyBinding.setKeyBindState(left, false);

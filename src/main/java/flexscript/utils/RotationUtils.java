@@ -1,5 +1,6 @@
 package flexscript.utils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.settings.KeyBinding;
@@ -8,6 +9,7 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import flexscript.Main;
+import org.apache.commons.lang3.tuple.MutablePair;
 
 public class RotationUtils {
     static boolean working = false;
@@ -82,4 +84,5 @@ public class RotationUtils {
             facePos(new Vec3(en.posX, en.posY + Main.mc.thePlayer.getEyeHeight(), en.posZ));
         }
     }
+
 }

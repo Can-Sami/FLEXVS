@@ -1,6 +1,8 @@
-package flexscript.features;
+package flexscript.features.mithril;
 
+import flexscript.Config;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
@@ -17,6 +19,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PinglessMining {
+    private static boolean tempClosed = false;
     private static BlockPos block = null;
     private static final ArrayList<BlockPos> broken = new ArrayList<>();
     private final KeyBinding lc = Main.mc.gameSettings.keyBindAttack;
@@ -27,7 +30,7 @@ public class PinglessMining {
         if (!Main.configFile.pinglessMining) return;
         if (Main.configFile.pinglessSpeed == 0 || Main.configFile.pinglessSpeed == 1) return;
         ticks++;
-        if(ticks % 80 == 0) {
+        if (ticks % 80 == 0) {
             broken.clear();
         }
         if (lc != null && lc.isKeyDown()) {
@@ -37,7 +40,7 @@ public class PinglessMining {
                     Block b = Main.mc.theWorld.getBlockState(movingObjectPosition.getBlockPos()).getBlock();
                     if (b == Blocks.stone || b == Blocks.emerald_ore || b == Blocks.lapis_ore || b == Blocks.redstone_ore ||
                             b == Blocks.iron_ore || b == Blocks.gold_ore || b == Blocks.coal_ore || b == Blocks.diamond_ore ||
-                    b == Blocks.nether_wart || b == Blocks.reeds || b == Blocks.potatoes || b == Blocks.carrots) {
+                            b == Blocks.nether_wart || b == Blocks.reeds || b == Blocks.potatoes || b == Blocks.carrots) {
                         broken.add(block);
                         Main.mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, block, EnumFacing.DOWN));
                         PlayerUtils.swingItem();
@@ -49,11 +52,15 @@ public class PinglessMining {
 
     @SubscribeEvent
     public void onTick40(TickEvent.ClientTickEvent event) {
+        if (tempClosed) {
+            Main.configFile.pinglessMining = true;
+            tempClosed = false;
+        }
         if (!Main.configFile.pinglessMining) return;
         if (Main.configFile.pinglessSpeed == 2) return;
         if (Main.configFile.pinglessSpeed == 0 && event.phase == TickEvent.Phase.END) return;
         ticks++;
-        if(ticks % 80 == 0) {
+        if (ticks % 80 == 0) {
             broken.clear();
         }
         if (lc != null && lc.isKeyDown()) {
@@ -92,7 +99,7 @@ public class PinglessMining {
         ArrayList<Vec3> blocks = new ArrayList<>();
         for (BlockPos blockPos : BlockPos.getAllInBox(playerPos.add(vec3i), playerPos.subtract(vec3i))) {
             IBlockState blockState = Main.mc.theWorld.getBlockState(blockPos);
-            if (isLookingAtBlock(blockPos, event) && !broken.contains(blockPos) && blockState.getBlock() != Blocks.air) {
+            if (isLookingAtBlock(blockPos, event) && !broken.contains(blockPos) && blockState.getBlock() != Blocks.air && blockState.getBlock() != Blocks.air) {
                 blocks.add(new Vec3(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5));
             }
         }

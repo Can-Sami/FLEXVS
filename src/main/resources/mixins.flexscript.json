@@ -4,7 +4,8 @@
   "package": "flexscript.mixins",
   "refmap": "mixins.flexscript.refmap.json",
   "mixins": [
-    "MixinNetworkManager"
+    "MixinNetworkManager",
+    "MinecraftMixin"
   ],
   "client": [
     "MixinEntityPlayer",

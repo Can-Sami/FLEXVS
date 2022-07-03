@@ -1,5 +1,7 @@
 package flexscript.utils;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -8,6 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import flexscript.Main;
 
 public class PlayerUtils {
+    private static Thread thread;
     public static boolean pickaxeAbilityReady = false;
 
     public static void swingItem() {
@@ -35,6 +38,23 @@ public class PlayerUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static void attackHold(Boolean state){
+        int Attack = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
+        if(!state) {
+            KeyBinding.setKeyBindState(Attack, false);
+            return;
+        }
+        thread = new Thread(() -> {
+            while (Main.blockMacro  || Main.farmingMacro) {
+                KeyBinding.setKeyBindState(Attack, state);
+            }
+            KeyBinding.setKeyBindState(Attack, state);
+        }, "attack");
+        thread.start();
+
 
     }
 }

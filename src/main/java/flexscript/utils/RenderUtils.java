@@ -73,7 +73,7 @@ public class RenderUtils {
     }
 
     public static void drawBlockBox(final BlockPos blockPos, final Color color, final int width, float partialTicks) {
-        if(width == 0) return;
+        if (width == 0) return;
         final RenderManager renderManager = mc.getRenderManager();
 
         final double x = blockPos.getX() - renderManager.viewerPosX;
@@ -179,7 +179,7 @@ public class RenderUtils {
     }
 
     public static void drawEntityBox(final Entity entity, final Color color, final int width, float partialTicks) {
-        if(width == 0) return;
+        if (width == 0) return;
         final RenderManager renderManager = mc.getRenderManager();
 
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -653,11 +653,7 @@ public class RenderUtils {
         glScissor((int) (x * factor), (int) ((scaledResolution.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
     }
 
-    /**
-     * Modified from NotEnoughUpdates under Creative Commons Attribution-NonCommercial 3.0
-     * https://github.com/Moulberry/NotEnoughUpdates/blob/master/LICENSE
-     */
-    public static void renderWaypointText(String str, double X, double Y, double Z, float partialTicks) {
+    public static void renderWaypointText(String str, double X, double Y, double Z, float partialTicks, boolean drawName, boolean drawDist) {
         GlStateManager.alphaFunc(516, 0.1F);
 
         GlStateManager.pushMatrix();
@@ -681,7 +677,7 @@ public class RenderUtils {
         GlStateManager.translate(x, y, z);
         GlStateManager.translate(0, viewer.getEyeHeight(), 0);
 
-        drawNametag(str);
+        if(drawName) drawNametag(str);
 
         GlStateManager.rotate(-Main.mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(Main.mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
@@ -689,7 +685,7 @@ public class RenderUtils {
         GlStateManager.rotate(-Main.mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
         GlStateManager.rotate(Main.mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
 
-        drawNametag(EnumChatFormatting.YELLOW.toString() + Math.round(dist) + " blocks");
+        if(drawDist) drawNametag(EnumChatFormatting.YELLOW.toString() + Math.round(dist) + " blocks");
 
         GlStateManager.popMatrix();
 

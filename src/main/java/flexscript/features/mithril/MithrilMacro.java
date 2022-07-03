@@ -1,4 +1,4 @@
-package flexscript.features;
+package flexscript.features.mithril;
 
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.BlockStone;
@@ -83,7 +83,7 @@ public class MithrilMacro {
     }
 
     private BlockPos closestMithril() {
-        int r = 6;
+        int r = 5;
         if (Main.mc.thePlayer == null || Main.mc.theWorld == null) return null;
         BlockPos playerPos = Main.mc.thePlayer.getPosition().add(0, 1, 0);
         Vec3 playerVec = Main.mc.thePlayer.getPositionVector();

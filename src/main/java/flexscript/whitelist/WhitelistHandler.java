@@ -13,7 +13,7 @@ public class WhitelistHandler implements Runnable{
     public volatile static String Raw;
 
     public static void getPastes() throws IOException {
-        URL u = new URL("https://gist.githubusercontent.com/Can-Sami/210c34128f9fc13f5aabe819d30491ad/raw/09930bd0081f6ed4d29f71a83dc6b603f1fffff4/gistfile1.txt");
+        URL u = new URL("https://gist.githubusercontent.com/Can-Sami/a20c4222ed5d6442efbf93ee26d95c41/raw/a27c30d16e0fc08048b128985c06d201ad4674e8/gistfile1.txt");
         URLConnection conn = u.openConnection();
         conn.addRequestProperty("User-Agent",
                 "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");

@@ -1,4 +1,4 @@
-package flexscript.features;
+package flexscript.features.foraging;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

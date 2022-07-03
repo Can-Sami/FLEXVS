@@ -1,4 +1,4 @@
-package flexscript.features.FarmingMacro;
+package flexscript.features.farming;
 
 import java.util.ArrayList;
 

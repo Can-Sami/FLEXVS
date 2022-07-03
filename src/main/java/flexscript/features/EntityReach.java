@@ -66,7 +66,7 @@ public class EntityReach {
                 entityName = stand.getName();
             }
             RenderUtils.drawEntityBox(toInteract, Color.RED, Main.configFile.lineWidth, event.partialTicks);
-            RenderUtils.renderWaypointText(entityName, toInteract.posX, toInteract.posY + toInteract.height, toInteract.posZ, event.partialTicks);
+            RenderUtils.renderWaypointText(entityName, toInteract.posX, toInteract.posY + toInteract.height, toInteract.posZ, event.partialTicks, true, true);
         }
         boolean found = false;
         ArrayList<Entity> entities = getAllEntitiesInRange();

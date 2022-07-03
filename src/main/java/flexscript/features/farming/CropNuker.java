@@ -1,4 +1,4 @@
-package flexscript.features;
+package flexscript.features.farming;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -26,7 +26,7 @@ public class CropNuker {
             broken.clear();
             return;
         }
-        if(broken.size() > 40) {
+        if(broken.size() > 20) {
             broken.clear();
         }
         crop = closestCrop();

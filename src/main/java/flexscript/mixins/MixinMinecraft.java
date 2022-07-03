@@ -24,4 +24,5 @@ public class MixinMinecraft {
     public void middleClickEvent(CallbackInfo ci) {
         if(MinecraftForge.EVENT_BUS.post(new ClickEvent.Middle())) ci.cancel();
     }
+
 }
