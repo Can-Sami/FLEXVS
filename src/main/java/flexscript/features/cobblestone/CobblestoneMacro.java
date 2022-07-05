@@ -25,7 +25,7 @@ public class CobblestoneMacro {
                 Main.blockMacro = true;
                 Main.startTime = System.currentTimeMillis();
 
-                PlayerUtils.attackHold(true);
+                PlayerUtils.attackHold();
                 timer.schedule(new SetHome(), 100);
                 timer.schedule(new ForwardInf(), 1000, 20000);
                 timer2.schedule(new ShiftInf(), 500, 20000);
@@ -40,7 +40,7 @@ public class CobblestoneMacro {
                 startCobble = InventoryUtils.getCounter();
                 Main.blockMacro = true;
                 Main.startTime = System.currentTimeMillis();
-                PlayerUtils.attackHold(true);
+                PlayerUtils.attackHold();
                 timer.schedule(new SetHome(), 100);
                 timer.schedule(new ForwardInf(), 1000, 20000);
                 timer3.schedule(new ShiftBlock(), 400);
@@ -60,7 +60,7 @@ public class CobblestoneMacro {
         timer.cancel();
         timer3.cancel();
         timer2.cancel();
-        PlayerUtils.attackHold(false);
+        PlayerUtils.stopAttacking();
 
         timer3 = new Timer();
         timer = new Timer();

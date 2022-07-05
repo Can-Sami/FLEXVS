@@ -2,6 +2,8 @@ package flexscript.utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.*;
+
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -31,4 +33,18 @@ public class Utils {
         Random r = new Random();
         return r.nextInt(upperbound);
     }
+
+    //Time Utils
+    public static long currentTimeMillis() {
+        return System.currentTimeMillis();
+    }
+
+    public static long timeSinceMillis(long oldMS) {
+        return System.currentTimeMillis() - oldMS;
+    }
+
+    public static boolean millisPassed(long waitTime) {
+        return currentTimeMillis() >= waitTime;
+    }
+
 }

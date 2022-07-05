@@ -3,7 +3,10 @@ package flexscript;
 import flexscript.features.*;
 import flexscript.features.InventoryCloser.InventoryCloser;
 import flexscript.features.esp.ArmorStandESP;
+import flexscript.features.farming.AntiStuck;
+import flexscript.features.farming.NewFarmingMacro;
 import flexscript.features.gemstoneaura.GemstoneAura;
+import flexscript.features.killaura.KillAura;
 import flexscript.features.mithril.MithrilMacro;
 import flexscript.features.mithril.MithrilNuker;
 import flexscript.features.mithril.PinglessMining;
@@ -12,10 +15,10 @@ import flexscript.features.autosell.SellCobblestone;
 import flexscript.features.cobblestone.CobbleStoneBreaker;
 import flexscript.features.cobblestone.CobblestoneMacro;
 import flexscript.features.breakfailsafe.BreakFailsafeCrops;
-import flexscript.features.farming.FarmingMacro;
 import flexscript.features.farming.CropNuker;
 import flexscript.features.foraging.ForagingNuker;
 import flexscript.features.hud.Render;
+import flexscript.features.mouselocker.MouseLocker;
 import flexscript.features.powdermacro.PowderMacro;
 import flexscript.features.profitcalculator.ProfitCalculator;
 import flexscript.utils.*;
@@ -117,6 +120,11 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new ArmorStandESP());
         MinecraftForge.EVENT_BUS.register(new PowderMacro());
         MinecraftForge.EVENT_BUS.register(new GemstoneAura());
+        MinecraftForge.EVENT_BUS.register(new KillAura());
+        MinecraftForge.EVENT_BUS.register(new MouseLocker());
+        MinecraftForge.EVENT_BUS.register(new NewFarmingMacro());
+        MinecraftForge.EVENT_BUS.register(new AntiStuck());
+
 
         configFile.initialize();
         ClientCommandHandler.instance.registerCommand(new OpenSettings());
@@ -131,6 +139,7 @@ public class Main {
         keyBinds[6] = new KeyBinding("Crop Aura Toggle", Keyboard.KEY_NONE, "Flex PREMIUM - Farming");
         keyBinds[7] = new KeyBinding("Powder Macro", Keyboard.KEY_NONE, "Flex PREMIUM - Mining");
         keyBinds[8] = new KeyBinding("Gemstone Aura", Keyboard.KEY_NONE, "Flex PREMIUM - Mining");
+
 
 
         for (KeyBinding keyBind : keyBinds) {
@@ -160,7 +169,7 @@ public class Main {
 
             nukeCrops = false;
             farmingMacro = false;
-            FarmingMacro.stopScript();
+            NewFarmingMacro.stopFarming();
 
             blockMacro = false;
             CobblestoneMacro.stopScript();
@@ -173,30 +182,25 @@ public class Main {
                         Main.mc.thePlayer.sendChatMessage("/skyblock");
                         Thread.sleep(10000);
                         if(wasFarming){
-                            FarmingMacro.farmingMacroStarter();
-                            ChatUtils.sendMessage("farming: " + wasFarming + " block: " + wasBlock);
+                            NewFarmingMacro.startFarming();
                         }else if(wasBlock){
                             CobblestoneMacro.blockMacroStarter();
-                            ChatUtils.sendMessage("farming: " + wasFarming + " block: " + wasBlock);
                         }
                     } else if (ScoreboardUtils.scoreboardContains("Village")) {
                         Main.mc.thePlayer.sendChatMessage("/is");
                         Thread.sleep(10000);
                         if(wasFarming){
-                            FarmingMacro.farmingMacroStarter();
-                            ChatUtils.sendMessage("farming: " + wasFarming + " block: " + wasBlock);
+                            NewFarmingMacro.startFarming();
                         }else if(wasBlock){
                             CobblestoneMacro.blockMacroStarter();
-                            ChatUtils.sendMessage("farming: " + wasFarming + " block: " + wasBlock);
                         }
                     } else if (ScoreboardUtils.scoreboardContains("Rank:")) {
                         Main.mc.thePlayer.sendChatMessage("/Skyblock");
+                        Thread.sleep(10000);
                         if(wasFarming){
-                            FarmingMacro.farmingMacroStarter();
-                            ChatUtils.sendMessage("farming: " + wasFarming + " block: " + wasBlock);
+                            NewFarmingMacro.startFarming();
                         }else if(wasBlock){
                             CobblestoneMacro.blockMacroStarter();
-                            ChatUtils.sendMessage("farming: " + wasFarming + " block: " + wasBlock);
                         }
                     }
                 } catch (InterruptedException e) {
@@ -265,7 +269,7 @@ public class Main {
             String str = nukeCrops ? "§fYou have successfully §bEnabled §fCrop Aura."
                     : "§fYou have successfully §cDisabled §fCrop Aura.";
             ChatUtils.sendMessage(str);
-                FarmingMacro.startCounter = InventoryUtils.getCounter();
+                NewFarmingMacro.startCounter = InventoryUtils.getCounter();
                 if(!nukeCrops){
                     tempProfit = ProfitCalculator.totalProfit;
                 }
@@ -283,9 +287,9 @@ public class Main {
                         : "§fYou have successfully §cDisabled §fFarming BOT.";
                 ChatUtils.sendMessage(str);
                 if (farmingMacro) {
-                    FarmingMacro.farmingMacroStarter();
+                    NewFarmingMacro.startFarming();
                 } else {
-                    FarmingMacro.stopScript();
+                    NewFarmingMacro.stopFarming();
                 }
             } else if (!Main.farmingMacro || !Config.INSTANCE.failSafe) {
                 ChatUtils.sendMessage("§fYou can not start the bot outside your island.");

@@ -1,7 +1,7 @@
 package flexscript.features.profitcalculator;
 
 import flexscript.Main;
-import flexscript.features.farming.FarmingMacro;
+import flexscript.features.farming.NewFarmingMacro;
 import flexscript.utils.InventoryUtils;
 import flexscript.utils.Utils;
 import gg.essential.elementa.state.BasicState;
@@ -28,9 +28,9 @@ public class ProfitCalculator {
 
 
     public static int getCropDiff() {
-        if(FarmingMacro.startCounter == 0) return 0;
+        if(NewFarmingMacro.startCounter == 0) return 0;
         lastCounter = InventoryUtils.getCounter();
-        return lastCounter - FarmingMacro.startCounter;
+        return lastCounter - NewFarmingMacro.startCounter;
 
     }
 

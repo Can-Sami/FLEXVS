@@ -24,13 +24,7 @@ public class ArmorStandESP {
     }
 
     private static boolean checkName(String name) {
-        if (name.contains("§8[§7Lv")) {
-            return true;
-        }
-        if (Main.configFile.mobEsp && name.contains("NPC")) {
-            return true;
-        }
-        return false;
+        return name.contains("§8[§7Lv");
     }
 
     @SubscribeEvent

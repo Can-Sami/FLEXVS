@@ -36,7 +36,7 @@ public class SellCobblestone {
                             Thread.sleep(1000);
                             if (InventoryUtils.inventoryNameContains("Are you sure")) {
                                 Minecraft.getMinecraft().thePlayer.closeScreen();
-                                Thread.sleep(1000);
+                                Thread.sleep(5000);
                                 CobblestoneMacro.blockMacroStarter();
                             }
                         }
@@ -58,14 +58,14 @@ public class SellCobblestone {
         CobblestoneMacro.stopScript();
         threadStart = new Thread(() -> {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
                 CobblestoneMacro.stopScript();
-                Thread.sleep(1000);
+                Thread.sleep(3000);
+                sellCobble();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }, "start");
         threadStart.start();
-        sellCobble();
     }
 }

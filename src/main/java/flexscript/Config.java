@@ -23,15 +23,9 @@ public class Config extends Vigilant {
     category = "General", subcategory = "HUD Overlay")
     public boolean HUD = true;
 
-
-    @Property(type = PropertyType.SLIDER, name = "&bForward Walking Time", description = "How long should you go forward. (in Seconds)",
-            category = "Farming", subcategory = "General", min = 0, max = 20)
-    public int forwardTimer = 1;
-
-
-    @Property(type = PropertyType.SLIDER, name = "&bSide Walikng Time", description = "How long should you go side. (in Seconds) (RIGHT/LEFT)",
-            category = "Farming", subcategory = "General", min = 0, max = 80)
-    public int sideTimer = 32;
+    @Property(type = PropertyType.SWITCH, name = "&bMob ESP", description = "Highlights the mobs around you.",
+            category = "General", subcategory = "Mob ESP")
+    public boolean mobEsp = false;
 
     @Property(type = PropertyType.SLIDER, name = "&bESP Range", description = "Esp blocks distance.",
             category = "General", subcategory = "Mob ESP", min = 0, max = 64)
@@ -49,20 +43,22 @@ public class Config extends Vigilant {
     public boolean showDistance = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bAuto SetHome", description = "Automatically sets home in one period. **NEEDED FOR THE FAILSAFE**",
-            category = "General", subcategory = "General")
+            category = "General", subcategory = "Fail Safe")
     public boolean autoSetHome = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bFail Safe", description = "Gets you back to your island if something happens.",
-            category = "General", subcategory = "General")
+            category = "General", subcategory = "Fail Safe")
     public boolean failSafe = true;
 
-    @Property(type = PropertyType.SWITCH, name = "&bBlock Breaking FailSafe", description = "If we detect that you are not breaking blocks, you will go to HUB and back to your Island.",
-            category = "Farming", subcategory = "General")
-    public volatile boolean resetCheatDetection = true;
 
-    @Property(type = PropertyType.SWITCH, name = "&bClose Fly on Fail Safe", description = "Turns OFF the fly when you come back to your island with failsafe.",
+    @Property(type = PropertyType.SWITCH, name = "&bAnti Stuck", description = "If you somehow get stuck this will fix it.",
             category = "Farming", subcategory = "General")
-    public boolean closeFly = true;
+    public volatile boolean antiStuck = true;
+
+    @Property(type = PropertyType.SWITCH, name = "&bAnti Stuck Jump", description = "Adds additional Jumping motion to Anti Stuck.",
+            category = "Farming", subcategory = "General")
+    public volatile boolean antiStuckJump = false;
+
 
     @Property(type = PropertyType.SLIDER, name = "&bRotation Sharpness", description = "How fast your head will turn. (1 is fast 40 is slow)",
             category = "General", subcategory = "General", min = 1, max = 40)
@@ -101,21 +97,7 @@ public class Config extends Vigilant {
     @Property(type = PropertyType.SLIDER, name = "&bAnti Ghost Blocks Period", description = "in every how much Minutes you will go to Hub and come back.",
     category = "Cobblestone Macro", subcategory = "General", max = 300 , min = 1)
     public int antiGhostPeriod = 30;
-    
 
-    @Property(type = PropertyType.SLIDER, name = "&bDelay Before Breaking Tree", description = "How long should you wait before breaking tree again. (in Milliseconds)",
-            category = "Foraging", subcategory = "General", max = 2000)
-    public int treecapDelay = 1000;
-
-    public int prerodDelay = 150;
-
-    public int postrodDelay = 150;
-
-    @Property(type = PropertyType.SWITCH, name = "&bRadomize Delay", description = "Randomizes the delay for a little.",
-            category = "Foraging", subcategory = "General")
-    public boolean randomizeForaging = false;
-
-    public boolean forageantisus = false;
 
     public int alchsleep = 300;
 
@@ -151,9 +133,6 @@ public class Config extends Vigilant {
             category = "Mining", subcategory = "General")
     public boolean pinglessMining = false;
 
-    @Property(type = PropertyType.SWITCH, name = "&bMob ESP", description = "Highlights the mobs around you.",
-            category = "General", subcategory = "Mob ESP")
-    public boolean mobEsp = false;
 
     @Property(type = PropertyType.SELECTOR, name = "&bPingless Mining Speed", description = "Determine how long to wait before mining the next block",
             category = "Mining", subcategory = "General", options = {"20 BPS (Legit)", "40 BPS", "80 BPS"})
@@ -162,6 +141,14 @@ public class Config extends Vigilant {
     @Property(type = PropertyType.SWITCH, name = "Prioritize Gemstone Blocks", description = "Will first search for full blocks, then panes",
             category = "Mining", subcategory = "Gemstone")
     public boolean prioblocks = false;
+
+    @Property(type = PropertyType.SWITCH, name = "Kill Aura", description = "Hits mobs automatically.",
+            category = "Kill Aura", subcategory = "Gemstone")
+    public boolean killAura = false;
+
+    @Property(type = PropertyType.SELECTOR, name = "Kill Aura Class",
+            category = "Kill Aura", subcategory = "Kill Aura", options = {"Melee", "Archer", "Mage", "Shaman"})
+    public int killAuraType = 0;
 
     @Property(type = PropertyType.BUTTON, name = "&bALT TAB", description = "Mines the next block before the previous block breaks, instabreak only",
             category = "General", subcategory = "General")

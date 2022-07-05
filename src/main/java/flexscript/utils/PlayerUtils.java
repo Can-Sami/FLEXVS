@@ -41,20 +41,18 @@ public class PlayerUtils {
 
     }
 
-    public static void attackHold(Boolean state){
+    public static void attackHold(){
         int Attack = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
-        if(!state) {
-            KeyBinding.setKeyBindState(Attack, false);
-            return;
-        }
         thread = new Thread(() -> {
             while (Main.blockMacro  || Main.farmingMacro) {
-                KeyBinding.setKeyBindState(Attack, state);
+                KeyBinding.setKeyBindState(Attack, true);
             }
-            KeyBinding.setKeyBindState(Attack, state);
         }, "attack");
         thread.start();
+    }
 
-
+    public static void stopAttacking(){
+        int Attack = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
+        KeyBinding.setKeyBindState(Attack, false);
     }
 }
