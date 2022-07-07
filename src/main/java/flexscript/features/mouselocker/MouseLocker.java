@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class MouseLocker {
 
-    private static boolean locked = false;
+    public static boolean locked = false;
 
     public static float defSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
 

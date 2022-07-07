@@ -82,6 +82,10 @@ public class Config extends Vigilant {
     category = "Cobblestone Macro", subcategory = "General")
     public boolean shift = false;
 
+    @Property(type = PropertyType.SWITCH, name = "&bCobble Stone", description = "If mod detects that you are not breaking blocks it will go hub and come back.",
+            category = "Cobblestone Macro", subcategory = "General")
+    public boolean breakFailsafeCobble = false;
+
     @Property(type = PropertyType.SWITCH, name = "&bMouse Locker", description = "Prevents your mouse movements while macros are working.",
             category = "General", subcategory = "General")
     public boolean mouseLock = false;
@@ -90,7 +94,7 @@ public class Config extends Vigilant {
     category = "Cobblestone Macro", subcategory = "General")
     public boolean antiGhost = true;
 
-    @Property(type = PropertyType.SWITCH, name = "&bSell Cobblestones", description = "Sells your cobblestones to Bazaar on full inventory. (REQUIRES COOKIE)",
+    @Property(type = PropertyType.SWITCH, name = "&bSell Cobble Stone", description = "Sells your Cobble Stone to Bazaar on full inventory. (REQUIRES COOKIE)",
             category = "Cobblestone Macro", subcategory = "General")
     public boolean sellCobble = true;
 

@@ -2,6 +2,7 @@ package flexscript;
 
 import flexscript.features.*;
 import flexscript.features.InventoryCloser.InventoryCloser;
+import flexscript.features.cobblestone.NewCobblestoneMacro;
 import flexscript.features.esp.ArmorStandESP;
 import flexscript.features.farming.AntiStuck;
 import flexscript.features.farming.NewFarmingMacro;
@@ -124,6 +125,7 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new MouseLocker());
         MinecraftForge.EVENT_BUS.register(new NewFarmingMacro());
         MinecraftForge.EVENT_BUS.register(new AntiStuck());
+        MinecraftForge.EVENT_BUS.register(new NewCobblestoneMacro());
 
 
         configFile.initialize();
@@ -297,13 +299,13 @@ public class Main {
         } else if (keyBinds[5].isPressed()) {
             if (ScoreboardUtils.scoreboardContains("Your Island")) {
                 blockMacro = !blockMacro;
-                String str = blockMacro ? "§fYou have successfully §bEnabled §fBlock Breaking BOT."
-                        : "§fYou have successfully §cDisabled §fBlock Breaking BOT.";
+                String str = blockMacro ? "§fYou have successfully §bEnabled §fCobble Stone BOT."
+                        : "§fYou have successfully §cDisabled §fCobble Stone BOT.";
                 ChatUtils.sendMessage(str);
                 if (blockMacro) {
-                    CobblestoneMacro.blockMacroStarter();
+                    NewCobblestoneMacro.startCobble();
                 } else {
-                    CobblestoneMacro.stopScript();
+                    NewCobblestoneMacro.stopCobble();
                     wasBlock = false;
                 }
             } else if (!Main.blockMacro || !Config.INSTANCE.failSafe) {
