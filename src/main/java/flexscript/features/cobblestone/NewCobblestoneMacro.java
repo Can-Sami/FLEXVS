@@ -42,6 +42,9 @@ public class NewCobblestoneMacro {
                 timer.schedule(new AntiGhostBlock(), Config.INSTANCE.antiGhostPeriod * 60000, Config.INSTANCE.antiGhostPeriod * 60000);
                 shouldGhostBlock = false;
             }
+            if (Config.INSTANCE.mouseLock && !MouseLocker.locked) {
+                MouseLocker.lockMouse();
+            }
 
         }
     }

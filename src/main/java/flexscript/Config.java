@@ -82,7 +82,7 @@ public class Config extends Vigilant {
     category = "Cobblestone Macro", subcategory = "General")
     public boolean shift = false;
 
-    @Property(type = PropertyType.SWITCH, name = "&bCobble Stone", description = "If mod detects that you are not breaking blocks it will go hub and come back.",
+    @Property(type = PropertyType.SWITCH, name = "&bBlock Break Checker", description = "If mod detects that you are not breaking blocks it will go hub and come back.",
             category = "Cobblestone Macro", subcategory = "General")
     public boolean breakFailsafeCobble = false;
 
@@ -94,12 +94,12 @@ public class Config extends Vigilant {
     category = "Cobblestone Macro", subcategory = "General")
     public boolean antiGhost = true;
 
-    @Property(type = PropertyType.SWITCH, name = "&bSell Cobble Stone", description = "Sells your Cobble Stone to Bazaar on full inventory. (REQUIRES COOKIE)",
+    @Property(type = PropertyType.SWITCH, name = "&bAuto Sell Cobble Stone", description = "Sells your Cobble Stone to Bazaar on full inventory. (REQUIRES COOKIE)",
             category = "Cobblestone Macro", subcategory = "General")
     public boolean sellCobble = true;
 
     @Property(type = PropertyType.SLIDER, name = "&bAnti Ghost Blocks Period", description = "in every how much Minutes you will go to Hub and come back.",
-    category = "Cobblestone Macro", subcategory = "General", max = 300 , min = 1)
+    category = "Cobblestone Macro", subcategory = "General", max = 60 , min = 1)
     public int antiGhostPeriod = 30;
 
 

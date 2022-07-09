@@ -2,7 +2,7 @@ package flexscript.features.autosell;
 
 import flexscript.Config;
 import flexscript.Main;
-import flexscript.features.cobblestone.CobblestoneMacro;
+import flexscript.features.cobblestone.NewCobblestoneMacro;
 import flexscript.utils.ChatUtils;
 import flexscript.utils.InventoryUtils;
 import net.minecraft.client.Minecraft;
@@ -17,11 +17,9 @@ public class SellCobblestone {
     public static void sellCobble() {
         thread = new Thread(() -> {
             try {
-
                 ChatUtils.sendMessage("§f AutoSell is starting...");
 
                 if (Minecraft.getMinecraft().currentScreen == null) {
-
                     Minecraft.getMinecraft().thePlayer.sendChatMessage("/bz");
                     Thread.sleep(1000);
                     if (InventoryUtils.inventoryNameContains("Bazaar")) {
@@ -37,7 +35,7 @@ public class SellCobblestone {
                             if (InventoryUtils.inventoryNameContains("Are you sure")) {
                                 Minecraft.getMinecraft().thePlayer.closeScreen();
                                 Thread.sleep(5000);
-                                CobblestoneMacro.blockMacroStarter();
+                                NewCobblestoneMacro.startCobble();
                             }
                         }
 
@@ -55,11 +53,10 @@ public class SellCobblestone {
         if (!Main.blockMacro) return;
         if (!event.message.getUnformattedText().contains("is full!")) return;
         if (!Config.INSTANCE.sellCobble) return;
-        CobblestoneMacro.stopScript();
         threadStart = new Thread(() -> {
             try {
                 Thread.sleep(3000);
-                CobblestoneMacro.stopScript();
+                NewCobblestoneMacro.stopCobble();
                 Thread.sleep(3000);
                 sellCobble();
             } catch (InterruptedException e) {

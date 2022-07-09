@@ -14,7 +14,6 @@ import flexscript.features.mithril.PinglessMining;
 import flexscript.features.autoreconnect.autoreconnect;
 import flexscript.features.autosell.SellCobblestone;
 import flexscript.features.cobblestone.CobbleStoneBreaker;
-import flexscript.features.cobblestone.CobblestoneMacro;
 import flexscript.features.breakfailsafe.BreakFailsafeCrops;
 import flexscript.features.farming.CropNuker;
 import flexscript.features.foraging.ForagingNuker;
@@ -174,7 +173,7 @@ public class Main {
             NewFarmingMacro.stopFarming();
 
             blockMacro = false;
-            CobblestoneMacro.stopScript();
+            NewCobblestoneMacro.stopCobble();
             nukeBlocks = false;
 
             thread = new Thread(() -> {
@@ -185,24 +184,31 @@ public class Main {
                         Thread.sleep(10000);
                         if(wasFarming){
                             NewFarmingMacro.startFarming();
+                            wasFarming = false;
                         }else if(wasBlock){
-                            CobblestoneMacro.blockMacroStarter();
+                            NewCobblestoneMacro.startCobble();
+                            wasBlock = false;
                         }
                     } else if (ScoreboardUtils.scoreboardContains("Village")) {
                         Main.mc.thePlayer.sendChatMessage("/is");
                         Thread.sleep(10000);
                         if(wasFarming){
                             NewFarmingMacro.startFarming();
+                            wasFarming = false;
                         }else if(wasBlock){
-                            CobblestoneMacro.blockMacroStarter();
+                            wasBlock = false;
+                            NewCobblestoneMacro.startCobble();
                         }
                     } else if (ScoreboardUtils.scoreboardContains("Rank:")) {
                         Main.mc.thePlayer.sendChatMessage("/Skyblock");
                         Thread.sleep(10000);
                         if(wasFarming){
+                            wasFarming = false;
                             NewFarmingMacro.startFarming();
+
                         }else if(wasBlock){
-                            CobblestoneMacro.blockMacroStarter();
+                            wasBlock = false;
+                            NewCobblestoneMacro.startCobble();
                         }
                     }
                 } catch (InterruptedException e) {
