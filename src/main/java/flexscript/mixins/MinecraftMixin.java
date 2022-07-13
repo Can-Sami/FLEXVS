@@ -1,6 +1,7 @@
 package flexscript.mixins;
 
 import flexscript.Config;
+import flexscript.Main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
@@ -9,6 +10,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import org.spongepowered.asm.mixin.Mixin;
@@ -45,10 +47,8 @@ public class MinecraftMixin {
 
     @Inject(method = "sendClickBlockToController", at = @At("RETURN"))
     private void sendClickBlockToController(CallbackInfo ci) {
-
         if(!Config.INSTANCE.fastBreak) return;
-
-        boolean shouldClick = this.currentScreen == null && this.gameSettings.keyBindAttack.isKeyDown() && this.inGameHasFocus;
+        boolean shouldClick = this.currentScreen == null && this.gameSettings.keyBindAttack.isKeyDown();
         if (this.objectMouseOver != null && shouldClick)
             for (int i = 0; i < 3; i++) {
                 BlockPos clickedBlock = this.objectMouseOver.getBlockPos();
@@ -57,7 +57,7 @@ public class MinecraftMixin {
                     break;
 
                 BlockPos newBlock = this.objectMouseOver.getBlockPos();
-                if (!newBlock.equals(clickedBlock) && this.theWorld.getBlockState(newBlock).getBlock() != Blocks.air) {
+                if (this.theWorld.getBlockState(newBlock).getBlock() != Blocks.air) {
                     this.playerController.clickBlock(newBlock, this.objectMouseOver.sideHit);
                 }
             }

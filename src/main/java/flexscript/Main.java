@@ -2,6 +2,8 @@ package flexscript;
 
 import flexscript.features.*;
 import flexscript.features.InventoryCloser.InventoryCloser;
+import flexscript.features.cobblestone.CobbleStoneBreaker;
+import flexscript.features.cobblestone.NewCobbleNuker;
 import flexscript.features.cobblestone.NewCobblestoneMacro;
 import flexscript.features.esp.ArmorStandESP;
 import flexscript.features.farming.AntiStuck;
@@ -13,7 +15,6 @@ import flexscript.features.mithril.MithrilNuker;
 import flexscript.features.mithril.PinglessMining;
 import flexscript.features.autoreconnect.autoreconnect;
 import flexscript.features.autosell.SellCobblestone;
-import flexscript.features.cobblestone.CobbleStoneBreaker;
 import flexscript.features.breakfailsafe.BreakFailsafeCrops;
 import flexscript.features.farming.CropNuker;
 import flexscript.features.foraging.ForagingNuker;
@@ -125,6 +126,7 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new NewFarmingMacro());
         MinecraftForge.EVENT_BUS.register(new AntiStuck());
         MinecraftForge.EVENT_BUS.register(new NewCobblestoneMacro());
+        MinecraftForge.EVENT_BUS.register(new NewCobbleNuker());
 
 
         configFile.initialize();

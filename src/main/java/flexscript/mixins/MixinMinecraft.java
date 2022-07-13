@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import flexscript.events.ClickEvent;
 
 @Mixin(Minecraft.class)
+
 public class MixinMinecraft {
     @Inject(method = "rightClickMouse", at = @At("HEAD"), cancellable = true)
     public void rightClickEvent(CallbackInfo ci) {

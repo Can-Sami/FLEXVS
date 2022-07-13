@@ -18,7 +18,7 @@ public class CobbleStoneBreaker {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (!Main.nukeBlocks || Main.mc.thePlayer == null || !Main.mc.thePlayer.onGround) {
+        if (true) {
             broken.clear();
             return;
         }
@@ -60,10 +60,10 @@ public class CobbleStoneBreaker {
                 closest = wart;
             }
         }
-        if (closest != null && smallest < 5) {
+        if (closest != null && smallest < 6) {
             return new BlockPos(closest.xCoord, closest.yCoord, closest.zCoord);
         }
         return null;
     }
-    
+
 }

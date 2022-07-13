@@ -2,6 +2,8 @@ package flexscript.features.breakfailsafe;
 
 import flexscript.Main;
 import flexscript.features.cobblestone.NewCobblestoneMacro;
+import flexscript.mixins.MinecraftMixin;
+import flexscript.mixins.MixinMinecraft;
 import flexscript.utils.ChatUtils;
 import flexscript.utils.InventoryUtils;
 import flexscript.utils.PlayerUtils;
@@ -26,9 +28,16 @@ public class BreakFailsafeCobble extends TimerTask {
         if (Minecraft.getMinecraft().thePlayer == null) return;
         if (InventoryUtils.getAmountInAllSlots("Enchanted Cobblestone") == lastCount) {
             ChatUtils.sendMessage("§f Block breaking is being prevented. You will be logged out and log back in.");
-            Sleep.sleep(5000);
+            NewCobblestoneMacro.stopCobble();
+            Sleep.sleep(200);
             Main.mc.setIngameFocus();
-            Sleep.sleep(5000);
+            Sleep.sleep(100);
+            KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindAttack.getKeyCode(), false);
+            Sleep.sleep(100);
+            KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindAttack.getKeyCode(), true);
+            Sleep.sleep(100);
+            KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindAttack.getKeyCode(), false);
+            Sleep.sleep(200);
             NewCobblestoneMacro.startCobble();
             lastCount = -1;
         }
