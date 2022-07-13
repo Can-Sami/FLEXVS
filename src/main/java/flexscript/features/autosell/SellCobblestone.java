@@ -5,6 +5,7 @@ import flexscript.Main;
 import flexscript.features.cobblestone.NewCobblestoneMacro;
 import flexscript.utils.ChatUtils;
 import flexscript.utils.InventoryUtils;
+import flexscript.utils.Sleep;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -54,14 +55,11 @@ public class SellCobblestone {
         if (!event.message.getUnformattedText().contains("is full!")) return;
         if (!Config.INSTANCE.sellCobble) return;
         threadStart = new Thread(() -> {
-            try {
-                Thread.sleep(3000);
+            
+                Sleep.sleep(3000);
                 NewCobblestoneMacro.stopCobble();
-                Thread.sleep(3000);
+                Sleep.sleep(3000);
                 sellCobble();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }, "start");
         threadStart.start();
     }

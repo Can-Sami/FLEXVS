@@ -61,7 +61,7 @@ public class NewCobblestoneMacro {
     public static void stopCobble(){
         shouldGhostBlock = true;
         shouldSetHome = true;
-        Main.blockMacro = false;
+        Main.farmingMacro = false;
         MouseLocker.unLockMouse();
 
         KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindForward.getKeyCode(), false);
