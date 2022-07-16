@@ -1,34 +1,48 @@
 package flexscript.features.mouselocker;
 
-import flexscript.Config;
-import flexscript.utils.ChatUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.util.MouseHelper;
+import org.lwjgl.input.Mouse;
 
 public class MouseLocker {
 
     public static boolean locked = false;
+    private static MouseHelper oldMouseHelper;
+    private static boolean doesGameWantUngrabbed;
 
-    public static float defSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
-
-    public static void lockMouse(){
-        Minecraft.getMinecraft().gameSettings.mouseSensitivity = -1F/3F;
+    public static void lockMouse() {
+        Minecraft m = Minecraft.getMinecraft();
+        if (locked) return;
+        m.gameSettings.pauseOnLostFocus = false;
+        if (oldMouseHelper == null) oldMouseHelper = m.mouseHelper;
+        doesGameWantUngrabbed = !Mouse.isGrabbed();
+        oldMouseHelper.ungrabMouseCursor();
+        m.inGameHasFocus = true;
+        m.mouseHelper = new MouseHelper() {
+            @Override
+            public void mouseXYChange() {
+            }
+            @Override
+            public void grabMouseCursor() {
+                doesGameWantUngrabbed = false;
+            }
+            @Override
+            public void ungrabMouseCursor() {
+                doesGameWantUngrabbed = true;
+            }
+        };
         locked = true;
-
     }
 
-    public static void unLockMouse(){
-        Minecraft.getMinecraft().gameSettings.mouseSensitivity = defSens;
+    /**
+     * This function performs all the steps required to regrab the mouse.
+     */
+    public static void unLockMouse() {
+        if (!locked) return;
+        Minecraft m = Minecraft.getMinecraft();
+        m.mouseHelper = oldMouseHelper;
+        if (!doesGameWantUngrabbed) m.mouseHelper.grabMouseCursor();
+        oldMouseHelper = null;
         locked = false;
     }
-
-    @SubscribeEvent
-    public void mouseEvent(MouseEvent event) {
-        if(!Config.INSTANCE.mouseLock) return;
-        if (!locked) return;
-        event.setCanceled(true);
-    }
-
-
 }

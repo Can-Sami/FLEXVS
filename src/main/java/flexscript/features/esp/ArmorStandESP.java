@@ -1,6 +1,6 @@
 package flexscript.features.esp;
 
-import flexscript.Config;
+import flexscript.config.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraftforge.client.event.RenderWorldLastEvent;

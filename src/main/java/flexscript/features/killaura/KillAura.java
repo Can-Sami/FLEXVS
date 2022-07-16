@@ -1,22 +1,17 @@
 package flexscript.features.killaura;
 
-import flexscript.Config;
+import flexscript.config.Config;
 import flexscript.Main;
 import flexscript.utils.ChatUtils;
 import flexscript.utils.RenderUtils;
 import flexscript.utils.RotationUtils;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.awt.*;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class KillAura {
     public static Entity target;

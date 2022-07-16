@@ -1,6 +1,6 @@
 package flexscript.features.autoreconnect;
 
-import flexscript.Config;
+import flexscript.config.Config;
 import flexscript.Main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDisconnected;

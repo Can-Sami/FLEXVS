@@ -41,18 +41,5 @@ public class PlayerUtils {
 
     }
 
-    public static void attackHold(){
-        int Attack = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
-        thread = new Thread(() -> {
-            while (Main.blockMacro  || Main.farmingMacro) {
-                KeyBinding.setKeyBindState(Attack, true);
-            }
-        }, "attack");
-        thread.start();
-    }
 
-    public static void stopAttacking(){
-        int Attack = Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode();
-        KeyBinding.setKeyBindState(Attack, false);
-    }
 }

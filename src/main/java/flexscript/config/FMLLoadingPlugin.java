@@ -1,4 +1,4 @@
-package flexscript;
+package flexscript.config;
 
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;

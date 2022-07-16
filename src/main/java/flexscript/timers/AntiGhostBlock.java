@@ -2,7 +2,7 @@ package flexscript.timers;
 
 import java.util.TimerTask;
 
-import flexscript.Config;
+import flexscript.config.Config;
 import flexscript.Main;
 import flexscript.utils.ChatUtils;
 import flexscript.utils.Sleep;
@@ -14,9 +14,9 @@ public class AntiGhostBlock extends TimerTask {
 
     @Override
     public void run() {
-        if (Main.blockMacro && Config.INSTANCE.antiGhost)
+        if (!Main.blockMacro && !Config.INSTANCE.antiGhost) return;
 
-            ChatUtils.sendMessage("§fYou will be sent to Hub for resetting Ghost Blocks!");
+        ChatUtils.sendMessage("§fYou will be sent to Hub for resetting Ghost Blocks!");
         Sleep.sleep(5000);
         Minecraft.getMinecraft().thePlayer.sendChatMessage("/hub");
     }

@@ -1,15 +1,9 @@
 package flexscript.features.cobblestone;
 
-import flexscript.Config;
+import flexscript.config.Config;
 import flexscript.Main;
-import flexscript.features.farming.AntiStuck;
-import flexscript.features.farming.NewFarmingMacro;
 import flexscript.features.mouselocker.MouseLocker;
 import flexscript.timers.AntiGhostBlock;
-import flexscript.utils.ChatUtils;
-import flexscript.utils.InventoryUtils;
-import flexscript.utils.PlayerUtils;
-import flexscript.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

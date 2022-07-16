@@ -1,4 +1,4 @@
-package flexscript;
+package flexscript.config;
 
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.*;
@@ -54,6 +54,14 @@ public class Config extends Vigilant {
     @Property(type = PropertyType.SWITCH, name = "&bAnti Stuck", description = "If you somehow get stuck this will fix it.",
             category = "Farming", subcategory = "General")
     public volatile boolean antiStuck = true;
+
+    @Property(type = PropertyType.SWITCH, name = "&bTurn 180 on drop", description = "Turns your head 180 degree on Y level change.",
+            category = "Farming", subcategory = "General")
+    public volatile boolean drop180 = true;
+
+    @Property(type = PropertyType.SWITCH, name = "&bResync", description = "Detects when you stop breaking crops and fixes.",
+            category = "Farming", subcategory = "General")
+    public volatile boolean resync = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bAnti Stuck Jump", description = "Adds additional Jumping motion to Anti Stuck.",
             category = "Farming", subcategory = "General")

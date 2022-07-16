@@ -1,6 +1,6 @@
 package flexscript.features.autosell;
 
-import flexscript.Config;
+import flexscript.config.Config;
 import flexscript.Main;
 import flexscript.features.cobblestone.NewCobblestoneMacro;
 import flexscript.utils.ChatUtils;

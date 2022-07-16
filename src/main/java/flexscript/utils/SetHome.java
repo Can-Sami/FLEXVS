@@ -1,7 +1,7 @@
 package flexscript.utils;
 
 
-import flexscript.Config;
+import flexscript.config.Config;
 import flexscript.Main;
 import net.minecraft.client.Minecraft;
 

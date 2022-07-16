@@ -1,11 +1,14 @@
 package flexscript;
 
-import flexscript.features.*;
+import flexscript.config.Config;
+import flexscript.config.OpenSettings;
 import flexscript.features.InventoryCloser.InventoryCloser;
-import flexscript.features.cobblestone.CobbleStoneBreaker;
 import flexscript.features.cobblestone.NewCobbleNuker;
 import flexscript.features.cobblestone.NewCobblestoneMacro;
 import flexscript.features.esp.ArmorStandESP;
+import flexscript.features.failsafe.Desync;
+import flexscript.features.failsafe.FailSafeCobbleStone;
+import flexscript.features.failsafe.FailSafeCrops;
 import flexscript.features.farming.AntiStuck;
 import flexscript.features.farming.NewFarmingMacro;
 import flexscript.features.gemstoneaura.GemstoneAura;
@@ -22,6 +25,7 @@ import flexscript.features.hud.Render;
 import flexscript.features.mouselocker.MouseLocker;
 import flexscript.features.powdermacro.PowderMacro;
 import flexscript.features.profitcalculator.ProfitCalculator;
+import flexscript.features.sugarcane.NewSugarCaneMacro;
 import flexscript.utils.*;
 import flexscript.whitelist.WhitelistHandler;
 import net.minecraft.client.Minecraft;
@@ -30,7 +34,6 @@ import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -56,11 +59,12 @@ public class Main {
     Thread checkWhitelist = new Thread(new WhitelistHandler());
     public static GuiScreen display = null;
     public static Config configFile = Config.INSTANCE;
-    public static KeyBinding[] keyBinds = new KeyBinding[9];
+    public static KeyBinding[] keyBinds = new KeyBinding[10];
     public static boolean endermanMacro = false;
     public static boolean gemNukeToggle = false;
     public static boolean mithrilNuker = false;
     public static volatile boolean farmingMacro = false;
+    public static volatile boolean sugarCaneMacro = false;
     public static volatile boolean blockMacro = false;
     public static boolean forageOnIsland = false;
     public static boolean nukeCrops = false;
@@ -76,7 +80,7 @@ public class Main {
     public static boolean tested = false;
     public static volatile boolean wasFarming = false;
     public static volatile boolean wasBlock = false;
-    private Thread thread;
+    public static volatile boolean wasScane = false;
     public static volatile double tempProfit = 0;
     public static boolean powderMacro = false;
 
@@ -103,9 +107,8 @@ public class Main {
         if (issue)
             return;
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new EntityReach());
+        MinecraftForge.EVENT_BUS.register(new Desync());
         MinecraftForge.EVENT_BUS.register(new CropNuker());
-        MinecraftForge.EVENT_BUS.register(new CobbleStoneBreaker());
         MinecraftForge.EVENT_BUS.register(new MithrilNuker());
         MinecraftForge.EVENT_BUS.register(new Render());
         MinecraftForge.EVENT_BUS.register(new ForagingNuker());
@@ -127,6 +130,9 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new AntiStuck());
         MinecraftForge.EVENT_BUS.register(new NewCobblestoneMacro());
         MinecraftForge.EVENT_BUS.register(new NewCobbleNuker());
+        MinecraftForge.EVENT_BUS.register(new FailSafeCrops());
+        MinecraftForge.EVENT_BUS.register(new FailSafeCobbleStone());
+        MinecraftForge.EVENT_BUS.register(new NewSugarCaneMacro());
 
 
         configFile.initialize();
@@ -142,6 +148,8 @@ public class Main {
         keyBinds[6] = new KeyBinding("Crop Aura Toggle", Keyboard.KEY_NONE, "Flex PREMIUM - Farming");
         keyBinds[7] = new KeyBinding("Powder Macro", Keyboard.KEY_NONE, "Flex PREMIUM - Mining");
         keyBinds[8] = new KeyBinding("Gemstone Aura", Keyboard.KEY_NONE, "Flex PREMIUM - Mining");
+        keyBinds[9] = new KeyBinding("SugarCane Macro", Keyboard.KEY_NONE, "Flex PREMIUM - Farming");
+
 
 
 
@@ -161,66 +169,7 @@ public class Main {
     }
 
 
-    //block macro or farming macro failsafe
-    @SubscribeEvent
-    public void onWorldChange(WorldEvent.Unload event) {
-        if (farmingMacro  || blockMacro ) {
-            ChatUtils.sendMessage("§fFail Safe is triggered. You will be put in your island in few seconds.");
-            wasFarming = farmingMacro;
-            wasBlock = blockMacro;
 
-
-            nukeCrops = false;
-            farmingMacro = false;
-            NewFarmingMacro.stopFarming();
-
-            blockMacro = false;
-            NewCobblestoneMacro.stopCobble();
-            nukeBlocks = false;
-
-            thread = new Thread(() -> {
-                try {
-                    Thread.sleep(10000);
-                    if (ScoreboardUtils.scoreboardContains("hypixel.net/ptl")) {
-                        Main.mc.thePlayer.sendChatMessage("/skyblock");
-                        Thread.sleep(10000);
-                        if(wasFarming){
-                            NewFarmingMacro.startFarming();
-                            wasFarming = false;
-                        }else if(wasBlock){
-                            NewCobblestoneMacro.startCobble();
-                            wasBlock = false;
-                        }
-                    } else if (ScoreboardUtils.scoreboardContains("Village")) {
-                        Main.mc.thePlayer.sendChatMessage("/is");
-                        Thread.sleep(10000);
-                        if(wasFarming){
-                            NewFarmingMacro.startFarming();
-                            wasFarming = false;
-                        }else if(wasBlock){
-                            wasBlock = false;
-                            NewCobblestoneMacro.startCobble();
-                        }
-                    } else if (ScoreboardUtils.scoreboardContains("Rank:")) {
-                        Main.mc.thePlayer.sendChatMessage("/Skyblock");
-                        Thread.sleep(10000);
-                        if(wasFarming){
-                            wasFarming = false;
-                            NewFarmingMacro.startFarming();
-
-                        }else if(wasBlock){
-                            wasBlock = false;
-                            NewCobblestoneMacro.startCobble();
-                        }
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }, "FailSafe");
-            thread.start();
-
-        }
-    }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void tick(TickEvent.ClientTickEvent event) {
@@ -247,8 +196,7 @@ public class Main {
 
     @SubscribeEvent
     public void key(InputEvent.KeyInputEvent event) {
-         if(!WhitelistHandler.Raw.contains(Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString())) 
-         return;
+         if(!WhitelistHandler.Raw.contains(Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString())) return;
         if (keyBinds[0].isPressed()) {
             nukeWood = !nukeWood;
             String str = nukeWood ? "§fYou have successfully §bEnabled §fForaging BOT."
@@ -317,6 +265,21 @@ public class Main {
                     wasBlock = false;
                 }
             } else if (!Main.blockMacro || !Config.INSTANCE.failSafe) {
+                ChatUtils.sendMessage("§fYou can not start the bot outside your island.");
+            }
+        } else if (keyBinds[9].isPressed()) {
+            if (ScoreboardUtils.scoreboardContains("Your Island")) {
+                sugarCaneMacro = !sugarCaneMacro;
+                String str = sugarCaneMacro ? "§fYou have successfully §bEnabled §fSugarCane BOT."
+                        : "§fYou have successfully §cDisabled §fSugarCane BOT.";
+                ChatUtils.sendMessage(str);
+                if (sugarCaneMacro) {
+                    NewSugarCaneMacro.startFarming();
+                } else {
+                    NewSugarCaneMacro.stopFarming();
+                    wasScane = false;
+                }
+            } else if (!Main.sugarCaneMacro || !Config.INSTANCE.failSafe) {
                 ChatUtils.sendMessage("§fYou can not start the bot outside your island.");
             }
         }

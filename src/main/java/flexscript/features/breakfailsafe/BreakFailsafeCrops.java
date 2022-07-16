@@ -1,16 +1,5 @@
 package flexscript.features.breakfailsafe;
 
-import flexscript.Config;
-import flexscript.Main;
-import flexscript.utils.ChatUtils;
-import flexscript.utils.InventoryUtils;
-import flexscript.utils.PlayerUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.play.client.C07PacketPlayerDigging;
-import net.minecraft.util.EnumFacing;
-
-import java.util.TimerTask;
-
 public class BreakFailsafeCrops {
     private static int lastCount;
 

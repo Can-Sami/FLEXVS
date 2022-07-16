@@ -1,9 +1,7 @@
 package flexscript.features.hud;
 
-import flexscript.Config;
-import flexscript.Main;
+import flexscript.config.Config;
 import flexscript.features.profitcalculator.ProfitCalculator;
-import flexscript.utils.ChatUtils;
 import gg.essential.universal.UGraphics;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -11,7 +9,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import gg.essential.elementa.components.Window;
-import gg.essential.universal.UGraphics;
 
 public class Render {
     private final Minecraft mc = Minecraft.getMinecraft();

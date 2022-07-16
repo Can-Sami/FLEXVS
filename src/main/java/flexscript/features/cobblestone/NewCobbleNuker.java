@@ -26,7 +26,7 @@ public class NewCobbleNuker {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         if(Main.configFile.farmSpeedIndex == 0 && event.phase == TickEvent.Phase.END) return;
-        if (!Main.farmingMacro || Main.mc.thePlayer == null) {
+        if (!Main.blockMacro || Main.mc.thePlayer == null) {
             broken.clear();
             return;
         }

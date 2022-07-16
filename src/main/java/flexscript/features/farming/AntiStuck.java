@@ -1,8 +1,7 @@
 package flexscript.features.farming;
 
-import flexscript.Config;
+import flexscript.config.Config;
 import flexscript.Main;
-import flexscript.utils.ChatUtils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
