@@ -15,7 +15,7 @@ public class FSSugarCane {
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Unload event) {
-        if (cobbleMacro) {
+        if (sugarCaneMacro) {
             ChatUtils.sendMessage("§fFail Safe is triggered. You will be put in your island in few seconds.");
             Main.wasScane = sugarCaneMacro;
             sugarCaneMacro = false;

@@ -6,6 +6,7 @@ import flexscript.features.InventoryCloser.InventoryCloser;
 import flexscript.features.cobblestone.NewCobblestoneMacro;
 import flexscript.features.esp.ArmorStandESP;
 import flexscript.features.failsafe.FSSugarCane;
+import flexscript.features.failsafe.breakcheckers.BFCobbleStone;
 import flexscript.features.failsafe.breakcheckers.BFFarming;
 import flexscript.features.failsafe.FSCrops;
 import flexscript.features.failsafe.FSCobbleStone;
@@ -107,6 +108,7 @@ public class Main {
             return;
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new BFFarming());
+        MinecraftForge.EVENT_BUS.register(new BFCobbleStone());
         MinecraftForge.EVENT_BUS.register(new CropNuker());
         MinecraftForge.EVENT_BUS.register(new MithrilNuker());
         MinecraftForge.EVENT_BUS.register(new Render());
@@ -148,8 +150,6 @@ public class Main {
         keyBinds[9] = new KeyBinding("SugarCane Macro", Keyboard.KEY_NONE, "Flex PREMIUM - Farming");
 
 
-
-
         for (KeyBinding keyBind : keyBinds) {
             ClientRegistry.registerKeyBinding(keyBind);
         }
@@ -164,8 +164,6 @@ public class Main {
             }
         });
     }
-
-
 
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -193,7 +191,8 @@ public class Main {
 
     @SubscribeEvent
     public void key(InputEvent.KeyInputEvent event) {
-         if(!WhitelistHandler.Raw.contains(Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString())) return;
+        if (!WhitelistHandler.Raw.contains(Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString()))
+            return;
         if (keyBinds[0].isPressed()) {
             nukeWood = !nukeWood;
             String str = nukeWood ? "§fYou have successfully §bEnabled §fForaging BOT."
@@ -219,16 +218,16 @@ public class Main {
             String str = gemNukeToggle ? "§fYou have successfully §bEnabled §fGemstone Aura."
                     : "§fYou have successfully §cDisabled §fGemstone Aura.";
             ChatUtils.sendMessage(str);
-        } else if(keyBinds[6].isPressed()){
+        } else if (keyBinds[6].isPressed()) {
             nukeCrops = !nukeCrops;
             String str = nukeCrops ? "§fYou have successfully §bEnabled §fCrop Aura."
                     : "§fYou have successfully §cDisabled §fCrop Aura.";
             ChatUtils.sendMessage(str);
-                NewFarmingMacro.startCounter = InventoryUtils.getCounter();
-                if(!nukeCrops){
-                    tempProfit = ProfitCalculator.totalProfit;
-                }
-                if(nukeCrops) Main.startTime = System.currentTimeMillis();
+            NewFarmingMacro.startCounter = InventoryUtils.getCounter();
+            if (!nukeCrops) {
+                tempProfit = ProfitCalculator.totalProfit;
+            }
+            if (nukeCrops) Main.startTime = System.currentTimeMillis();
 
         } else if (keyBinds[3].isPressed()) {
             mithrilMacro = !mithrilMacro;

@@ -1,33 +1,36 @@
 package flexscript.features.failsafe.breakcheckers;
 
 import flexscript.Main;
+import flexscript.config.Config;
 import flexscript.features.cobblestone.NewCobblestoneMacro;
 import flexscript.utils.ChatUtils;
 import flexscript.utils.InventoryUtils;
 import flexscript.utils.Sleep;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.TimerTask;
 
-public class BFCobbleStone extends TimerTask {
+public class BFCobbleStone {
 
+    private int ticks = 0;
     private int lastCount;
 
-    @Override
-    public void run() {
-
-        if (!Main.cobbleMacro) return;
-        if (Minecraft.getMinecraft().theWorld == null) return;
-        if (Minecraft.getMinecraft().thePlayer == null) return;
-        if (InventoryUtils.getAmountInAllSlots("Enchanted Cobblestone") == lastCount) {
-            ChatUtils.sendMessage("§f Block breaking is being prevented. You will be logged out and log back in.");
-            Sleep.sleep(5000);
-            Main.mc.setIngameFocus();
-            Sleep.sleep(5000);
-            NewCobblestoneMacro.startMacro();
-            lastCount = -1;
+    @SubscribeEvent
+    public void onTick(TickEvent.ClientTickEvent event) {
+        if(!Main.cobbleMacro) return;
+        if(!Config.INSTANCE.resync) return;
+        if(Main.mc.theWorld == null) return;
+        if(Main.mc.thePlayer == null) return;
+        ticks++;
+        if (ticks == 600) {
+            ticks = 0;
+            if (lastCount == InventoryUtils.getAmountInAllSlots("Enchanted Cobblestone")) {
+                Main.mc.thePlayer.sendChatMessage("/hub");
+                lastCount = -1;
+            }
+            lastCount = InventoryUtils.getAmountInAllSlots("Enchanted Cobblestone");
         }
-        System.out.println(lastCount + " " + InventoryUtils.getAmountInAllSlots("Enchanted Cobblestone"));
-        lastCount = InventoryUtils.getAmountInAllSlots("Enchanted Cobblestone");
     }
 }

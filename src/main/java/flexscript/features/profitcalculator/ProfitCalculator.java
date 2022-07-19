@@ -35,7 +35,7 @@ public class ProfitCalculator {
     }
 
     public static void calculateProfit() {
-        if(!Main.farmingMacro) return;
+        if(!Main.farmingMacro || !Main.sugarCaneMacro) return;
         if(mc.theWorld == null) return;
         if(Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() == null) return;
         final ItemStack held = mc.thePlayer.getHeldItem();

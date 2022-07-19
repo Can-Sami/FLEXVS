@@ -35,7 +35,7 @@ public class Config extends Vigilant {
             category = "General", subcategory = "Mob ESP")
     public boolean showNameTag = true;
 
-    @Property(type = PropertyType.COLOR, name = "Mob ESP Color", description = "Sets the color for the ESP box.", category = "General", subcategory = "Mob ESP")
+    @Property(type = PropertyType.COLOR, name = "&bMob ESP Color", description = "Sets the color for the ESP box.", category = "General", subcategory = "Mob ESP")
     public static Color espColor = Color.MAGENTA;
 
     @Property(type = PropertyType.SWITCH, name = "&bShow Distance", description = "Shows your distance from the entity.",
@@ -84,7 +84,7 @@ public class Config extends Vigilant {
 
     @Property(type = PropertyType.SWITCH, name = "&bAuto Reconnect", description = "Reconnects you if you get disconnected while Macroing.",
             category = "Fail Safe", subcategory = "General")
-    public boolean reconnect = true;
+    public boolean reconnect = false;
 
     @Property(type = PropertyType.SWITCH, name = "&bHold Shift", description = "Holds Shift while you are moving.",
     category = "Cobblestone Macro", subcategory = "General")
@@ -125,7 +125,7 @@ public class Config extends Vigilant {
 
 
     @Property(type = PropertyType.SWITCH, name = "&bRandomized actions", description = "This will make u look less sus",
-            category = "Mining", subcategory = "General")
+            category = "Mining", subcategory = "Mithril")
     public boolean mithrilLook = false;
 
     @Property(type = PropertyType.SWITCH, name = "&bSkip Titanium", description = "Mithril nuker will ignore titanium",
