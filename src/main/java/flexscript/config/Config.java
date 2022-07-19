@@ -43,16 +43,16 @@ public class Config extends Vigilant {
     public boolean showDistance = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bAuto SetHome", description = "Automatically sets home in one period. **NEEDED FOR THE FAILSAFE**",
-            category = "General", subcategory = "Fail Safe")
+            category = "Fail Safe", subcategory = "General")
     public boolean autoSetHome = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bFail Safe", description = "Gets you back to your island if something happens.",
-            category = "General", subcategory = "Fail Safe")
+            category = "Fail Safe", subcategory = "General")
     public boolean failSafe = true;
 
 
     @Property(type = PropertyType.SWITCH, name = "&bAnti Stuck", description = "If you somehow get stuck this will fix it.",
-            category = "Farming", subcategory = "General")
+            category = "Fail Safe", subcategory = "Anti Stuck")
     public volatile boolean antiStuck = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bTurn 180 on drop", description = "Turns your head 180 degree on Y level change.",
@@ -60,11 +60,11 @@ public class Config extends Vigilant {
     public volatile boolean drop180 = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bResync", description = "Detects when you stop breaking crops and fixes.",
-            category = "Farming", subcategory = "General")
+            category = "Fail Safe", subcategory = "General")
     public volatile boolean resync = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bAnti Stuck Jump", description = "Adds additional Jumping motion to Anti Stuck.",
-            category = "Farming", subcategory = "General")
+            category = "Fail Safe", subcategory = "Anti Stuck")
     public volatile boolean antiStuckJump = false;
 
 
@@ -83,7 +83,7 @@ public class Config extends Vigilant {
     public boolean fastBreak = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bAuto Reconnect", description = "Reconnects you if you get disconnected while Macroing.",
-            category = "General", subcategory = "General")
+            category = "Fail Safe", subcategory = "General")
     public boolean reconnect = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bHold Shift", description = "Holds Shift while you are moving.",
@@ -99,7 +99,7 @@ public class Config extends Vigilant {
     public boolean mouseLock = false;
 
     @Property(type = PropertyType.SWITCH, name = "&bAnti Ghost Blocks", description = "You will go to Hub and come back in a period.",
-    category = "Cobblestone Macro", subcategory = "General")
+    category = "Cobblestone Macro", subcategory = "Ghost Blocks")
     public boolean antiGhost = true;
 
     @Property(type = PropertyType.SWITCH, name = "&bAuto Sell Cobble Stone", description = "Sells your Cobble Stone to Bazaar on full inventory. (REQUIRES COOKIE)",
@@ -107,7 +107,7 @@ public class Config extends Vigilant {
     public boolean sellCobble = true;
 
     @Property(type = PropertyType.SLIDER, name = "&bAnti Ghost Blocks Period", description = "in every how much Minutes you will go to Hub and come back.",
-    category = "Cobblestone Macro", subcategory = "General", max = 60 , min = 1)
+    category = "Cobblestone Macro", subcategory = "Ghost Blocks", max = 60 , min = 1)
     public int antiGhostPeriod = 30;
 
 
@@ -150,16 +150,16 @@ public class Config extends Vigilant {
             category = "Mining", subcategory = "General", options = {"20 BPS (Legit)", "40 BPS", "80 BPS"})
     public int pinglessSpeed = 0;
 
-    @Property(type = PropertyType.SWITCH, name = "Prioritize Gemstone Blocks", description = "Will first search for full blocks, then panes",
+    @Property(type = PropertyType.SWITCH, name = "&bPrioritize Gemstone Blocks", description = "Will first search for full blocks, then panes",
             category = "Mining", subcategory = "Gemstone")
     public boolean prioblocks = false;
 
     @Property(type = PropertyType.SWITCH, name = "Kill Aura", description = "Hits mobs automatically.",
-            category = "Kill Aura", subcategory = "Gemstone")
+            category = "Ghost Macro", subcategory = "Gemstone")
     public boolean killAura = false;
 
     @Property(type = PropertyType.SELECTOR, name = "Kill Aura Class",
-            category = "Kill Aura", subcategory = "Kill Aura", options = {"Melee", "Archer", "Mage", "Shaman"})
+            category = "Ghost Macro", subcategory = "Kill Aura", options = {"Melee", "Archer", "Mage", "Shaman"})
     public int killAuraType = 0;
 
     @Property(type = PropertyType.BUTTON, name = "&bALT TAB", description = "Mines the next block before the previous block breaks, instabreak only",

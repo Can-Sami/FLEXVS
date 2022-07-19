@@ -1,25 +1,25 @@
 package flexscript.features.failsafe;
 
 import flexscript.Main;
-import flexscript.features.cobblestone.NewCobblestoneMacro;
+import flexscript.features.sugarcane.NewSugarCaneMacro;
 import flexscript.utils.ChatUtils;
 import flexscript.utils.ScoreboardUtils;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import static flexscript.Main.blockMacro;
+import static flexscript.Main.cobbleMacro;
+import static flexscript.Main.sugarCaneMacro;
 
-public class FailSafeCrops {
-
+public class FSSugarCane {
     private Thread thread;
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Unload event) {
-        if (blockMacro) {
+        if (cobbleMacro) {
             ChatUtils.sendMessage("§fFail Safe is triggered. You will be put in your island in few seconds.");
-            Main.wasBlock = blockMacro;
-            blockMacro = false;
-            NewCobblestoneMacro.stopCobble();
+            Main.wasScane = sugarCaneMacro;
+            sugarCaneMacro = false;
+            NewSugarCaneMacro.stopMacro();
 
             thread = new Thread(() -> {
                 try {
@@ -33,7 +33,7 @@ public class FailSafeCrops {
                         Thread.sleep(10000);
                         startIfShould();
                     } else if (ScoreboardUtils.scoreboardContains("Rank:")) {
-                        Main.mc.thePlayer.sendChatMessage("/Skyblock");
+                        Main.mc.thePlayer.sendChatMessage("/skyblock");
                         Thread.sleep(10000);
                         startIfShould();
                     }
@@ -47,9 +47,9 @@ public class FailSafeCrops {
     }
 
     private void startIfShould() {
-        if (Main.wasBlock) {
-            NewCobblestoneMacro.stopCobble();
-            Main.wasBlock = false;
+        if (Main.wasScane) {
+            NewSugarCaneMacro.startMacro();
+            Main.wasScane = false;
         }
     }
 }

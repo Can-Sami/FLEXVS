@@ -14,7 +14,7 @@ public class ShiftBlock extends TimerTask {
 
         long oldTime = System.currentTimeMillis();
 
-        while (System.currentTimeMillis() - oldTime < 500 && Main.blockMacro) {
+        while (System.currentTimeMillis() - oldTime < 500 && Main.cobbleMacro) {
             
             KeyBinding.setKeyBindState(left, true);
         }

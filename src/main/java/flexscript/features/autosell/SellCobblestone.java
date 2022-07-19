@@ -36,7 +36,7 @@ public class SellCobblestone {
                             if (InventoryUtils.inventoryNameContains("Are you sure")) {
                                 Minecraft.getMinecraft().thePlayer.closeScreen();
                                 Thread.sleep(5000);
-                                NewCobblestoneMacro.startCobble();
+                                NewCobblestoneMacro.startMacro();
                             }
                         }
 
@@ -51,13 +51,13 @@ public class SellCobblestone {
 
     @SubscribeEvent
     public void onMessageReceived(ClientChatReceivedEvent event) {
-        if (!Main.blockMacro) return;
         if (!event.message.getUnformattedText().contains("is full!")) return;
+        if (!Main.cobbleMacro) return;
         if (!Config.INSTANCE.sellCobble) return;
         threadStart = new Thread(() -> {
             
                 Sleep.sleep(3000);
-                NewCobblestoneMacro.stopCobble();
+                NewCobblestoneMacro.stopMacro();
                 Sleep.sleep(3000);
                 sellCobble();
         }, "start");

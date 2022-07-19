@@ -17,7 +17,7 @@ public class SetHome extends TimerTask {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/sethome");
         }
 
-        if(Main.blockMacro) {
+        if(Main.cobbleMacro) {
             Minecraft.getMinecraft().thePlayer.sendChatMessage("/sethome");
         }
 

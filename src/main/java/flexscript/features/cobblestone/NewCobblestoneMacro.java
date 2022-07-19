@@ -16,11 +16,11 @@ public class NewCobblestoneMacro {
 
     private static boolean shouldSetHome = true;
     public static boolean shouldGhostBlock = true;
-    private Timer timer = new Timer();
+    private static Timer timer = new Timer();
 
     @SubscribeEvent
     public void blockCobble(@NotNull TickEvent.ClientTickEvent event) {
-        if (Main.blockMacro) {
+        if (Main.cobbleMacro) {
             KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindAttack.getKeyCode(), true);
             KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindForward.getKeyCode(), true);
             if(Config.INSTANCE.shift){
@@ -30,7 +30,7 @@ public class NewCobblestoneMacro {
                 Minecraft.getMinecraft().thePlayer.sendChatMessage("/sethome");
                 shouldSetHome = false;
             }
-            Main.blockMacro = true;
+            Main.cobbleMacro = true;
             Main.startTime = System.currentTimeMillis();
             if (shouldGhostBlock) {
                 timer.schedule(new AntiGhostBlock(), Config.INSTANCE.antiGhostPeriod * 60000, Config.INSTANCE.antiGhostPeriod * 60000);
@@ -44,19 +44,22 @@ public class NewCobblestoneMacro {
     }
 
 
-    public static void startCobble(){
-        Main.blockMacro = true;
+    public static void startMacro(){
+        Main.cobbleMacro = true;
         if(Config.INSTANCE.mouseLock){
             MouseLocker.lockMouse();
         }
         Main.startTime = System.currentTimeMillis();
     }
 
-    public static void stopCobble(){
+    public static void stopMacro(){
         shouldGhostBlock = true;
         shouldSetHome = true;
-        Main.farmingMacro = false;
+        Main.cobbleMacro = false;
         MouseLocker.unLockMouse();
+
+        timer.cancel();
+        timer = new Timer();
 
         KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindForward.getKeyCode(), false);
         KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindSneak.getKeyCode(), false);

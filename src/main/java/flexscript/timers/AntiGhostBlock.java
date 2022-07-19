@@ -14,8 +14,7 @@ public class AntiGhostBlock extends TimerTask {
 
     @Override
     public void run() {
-        if (!Main.blockMacro && !Config.INSTANCE.antiGhost) return;
-
+        if (!Main.cobbleMacro && !Config.INSTANCE.antiGhost) return;
         ChatUtils.sendMessage("§fYou will be sent to Hub for resetting Ghost Blocks!");
         Sleep.sleep(5000);
         Minecraft.getMinecraft().thePlayer.sendChatMessage("/hub");

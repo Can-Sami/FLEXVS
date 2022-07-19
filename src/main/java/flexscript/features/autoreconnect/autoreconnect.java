@@ -17,7 +17,7 @@ public class autoreconnect {
 
     @SubscribeEvent
     public final void tick(TickEvent.RenderTickEvent event) {
-        if (!Main.wasBlock) return;
+        if (!Main.wasBlock || !Main.wasScane || !Main.wasFarming) return;
         if(!Config.INSTANCE.reconnect) return;
         if((mc.currentScreen instanceof GuiDisconnected || mc.currentScreen instanceof GuiMultiplayer)){
             FMLClientHandler.instance().connectToServer(mc.currentScreen instanceof GuiMultiplayer ? mc.currentScreen : new GuiMultiplayer(new GuiMainMenu()), hypixelServerData);

@@ -55,7 +55,7 @@ public class NewFarmingMacro {
         return 1000 + (new Random().nextInt() % (2000 - 1000 + 1));
     }
 
-    public static void startFarming(){
+    public static void startMacro(){
             Main.farmingMacro = true;
             NewFarmingMacro.left = true;
             NewFarmingMacro.forward = false;
@@ -65,7 +65,7 @@ public class NewFarmingMacro {
             startCounter = InventoryUtils.getCounter();
     }
 
-    public static void stopFarming(){
+    public static void stopMacro(){
         Main.farmingMacro = false;
         MouseLocker.unLockMouse();
 

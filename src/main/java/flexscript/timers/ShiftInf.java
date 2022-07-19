@@ -13,7 +13,7 @@ public class ShiftInf extends TimerTask {
         int left = Minecraft.getMinecraft().gameSettings.keyBindSneak.getKeyCode();
 
 
-        while (Main.blockMacro) {
+        while (Main.cobbleMacro) {
             KeyBinding.setKeyBindState(left, true);
         }
         KeyBinding.setKeyBindState(left, false);

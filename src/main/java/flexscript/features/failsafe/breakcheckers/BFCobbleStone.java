@@ -1,27 +1,22 @@
-package flexscript.features.breakfailsafe;
+package flexscript.features.failsafe.breakcheckers;
 
 import flexscript.Main;
 import flexscript.features.cobblestone.NewCobblestoneMacro;
 import flexscript.utils.ChatUtils;
 import flexscript.utils.InventoryUtils;
-import flexscript.utils.PlayerUtils;
 import flexscript.utils.Sleep;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.network.play.client.C07PacketPlayerDigging;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 
 import java.util.TimerTask;
 
-public class BreakFailsafeCobble extends TimerTask {
+public class BFCobbleStone extends TimerTask {
 
     private int lastCount;
 
     @Override
     public void run() {
 
-        if (!Main.blockMacro) return;
+        if (!Main.cobbleMacro) return;
         if (Minecraft.getMinecraft().theWorld == null) return;
         if (Minecraft.getMinecraft().thePlayer == null) return;
         if (InventoryUtils.getAmountInAllSlots("Enchanted Cobblestone") == lastCount) {
@@ -29,7 +24,7 @@ public class BreakFailsafeCobble extends TimerTask {
             Sleep.sleep(5000);
             Main.mc.setIngameFocus();
             Sleep.sleep(5000);
-            NewCobblestoneMacro.startCobble();
+            NewCobblestoneMacro.startMacro();
             lastCount = -1;
         }
         System.out.println(lastCount + " " + InventoryUtils.getAmountInAllSlots("Enchanted Cobblestone"));

@@ -13,7 +13,7 @@ public class ForwardInf extends TimerTask{
     public void run() {
         int left = Minecraft.getMinecraft().gameSettings.keyBindForward.getKeyCode();
 
-        while (Main.blockMacro) {
+        while (Main.cobbleMacro) {
             KeyBinding.setKeyBindState(left, true);
 
 

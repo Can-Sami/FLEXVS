@@ -168,6 +168,12 @@ public class BlockUtils {
     public static Block getRightBlock(){
         return getRelativeBlock(1, 0, 0);
     }
+    public static Block getRightTopBlock(){
+        return getRelativeBlock(1, 1, 0);
+    }
+    public static Block getLeftTopBlock(){
+        return getRelativeBlock(-1, 1, 0);
+    }
     public static Block getBackBlock(){
         return getRelativeBlock(0, 0, -1);
     }

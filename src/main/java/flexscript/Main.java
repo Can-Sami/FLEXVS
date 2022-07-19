@@ -3,12 +3,12 @@ package flexscript;
 import flexscript.config.Config;
 import flexscript.config.OpenSettings;
 import flexscript.features.InventoryCloser.InventoryCloser;
-import flexscript.features.cobblestone.NewCobbleNuker;
 import flexscript.features.cobblestone.NewCobblestoneMacro;
 import flexscript.features.esp.ArmorStandESP;
-import flexscript.features.failsafe.Desync;
-import flexscript.features.failsafe.FailSafeCobbleStone;
-import flexscript.features.failsafe.FailSafeCrops;
+import flexscript.features.failsafe.FSSugarCane;
+import flexscript.features.failsafe.breakcheckers.BFFarming;
+import flexscript.features.failsafe.FSCrops;
+import flexscript.features.failsafe.FSCobbleStone;
 import flexscript.features.farming.AntiStuck;
 import flexscript.features.farming.NewFarmingMacro;
 import flexscript.features.gemstoneaura.GemstoneAura;
@@ -18,7 +18,6 @@ import flexscript.features.mithril.MithrilNuker;
 import flexscript.features.mithril.PinglessMining;
 import flexscript.features.autoreconnect.autoreconnect;
 import flexscript.features.autosell.SellCobblestone;
-import flexscript.features.breakfailsafe.BreakFailsafeCrops;
 import flexscript.features.farming.CropNuker;
 import flexscript.features.foraging.ForagingNuker;
 import flexscript.features.hud.Render;
@@ -65,7 +64,7 @@ public class Main {
     public static boolean mithrilNuker = false;
     public static volatile boolean farmingMacro = false;
     public static volatile boolean sugarCaneMacro = false;
-    public static volatile boolean blockMacro = false;
+    public static volatile boolean cobbleMacro = false;
     public static boolean forageOnIsland = false;
     public static boolean nukeCrops = false;
     public static boolean nukeBlocks = false;
@@ -107,7 +106,7 @@ public class Main {
         if (issue)
             return;
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new Desync());
+        MinecraftForge.EVENT_BUS.register(new BFFarming());
         MinecraftForge.EVENT_BUS.register(new CropNuker());
         MinecraftForge.EVENT_BUS.register(new MithrilNuker());
         MinecraftForge.EVENT_BUS.register(new Render());
@@ -118,20 +117,18 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new ShadyRotation());
         MinecraftForge.EVENT_BUS.register(new ScoreboardUtils());
         MinecraftForge.EVENT_BUS.register(new InventoryCloser());
-        MinecraftForge.EVENT_BUS.register(new BreakFailsafeCrops());
+        MinecraftForge.EVENT_BUS.register(new FSSugarCane());
         MinecraftForge.EVENT_BUS.register(new SellCobblestone());
         MinecraftForge.EVENT_BUS.register(new autoreconnect());
         MinecraftForge.EVENT_BUS.register(new ArmorStandESP());
         MinecraftForge.EVENT_BUS.register(new PowderMacro());
         MinecraftForge.EVENT_BUS.register(new GemstoneAura());
         MinecraftForge.EVENT_BUS.register(new KillAura());
-        MinecraftForge.EVENT_BUS.register(new MouseLocker());
         MinecraftForge.EVENT_BUS.register(new NewFarmingMacro());
         MinecraftForge.EVENT_BUS.register(new AntiStuck());
         MinecraftForge.EVENT_BUS.register(new NewCobblestoneMacro());
-        MinecraftForge.EVENT_BUS.register(new NewCobbleNuker());
-        MinecraftForge.EVENT_BUS.register(new FailSafeCrops());
-        MinecraftForge.EVENT_BUS.register(new FailSafeCobbleStone());
+        MinecraftForge.EVENT_BUS.register(new FSCobbleStone());
+        MinecraftForge.EVENT_BUS.register(new FSCrops());
         MinecraftForge.EVENT_BUS.register(new NewSugarCaneMacro());
 
 
@@ -245,26 +242,26 @@ public class Main {
                         : "§fYou have successfully §cDisabled §fFarming BOT.";
                 ChatUtils.sendMessage(str);
                 if (farmingMacro) {
-                    NewFarmingMacro.startFarming();
+                    NewFarmingMacro.startMacro();
                 } else {
-                    NewFarmingMacro.stopFarming();
+                    NewFarmingMacro.stopMacro();
                 }
             } else if (!Main.farmingMacro || !Config.INSTANCE.failSafe) {
                 ChatUtils.sendMessage("§fYou can not start the bot outside your island.");
             }
         } else if (keyBinds[5].isPressed()) {
             if (ScoreboardUtils.scoreboardContains("Your Island")) {
-                blockMacro = !blockMacro;
-                String str = blockMacro ? "§fYou have successfully §bEnabled §fCobble Stone BOT."
+                cobbleMacro = !cobbleMacro;
+                String str = cobbleMacro ? "§fYou have successfully §bEnabled §fCobble Stone BOT."
                         : "§fYou have successfully §cDisabled §fCobble Stone BOT.";
                 ChatUtils.sendMessage(str);
-                if (blockMacro) {
-                    NewCobblestoneMacro.startCobble();
+                if (cobbleMacro) {
+                    NewCobblestoneMacro.startMacro();
                 } else {
-                    NewCobblestoneMacro.stopCobble();
+                    NewCobblestoneMacro.stopMacro();
                     wasBlock = false;
                 }
-            } else if (!Main.blockMacro || !Config.INSTANCE.failSafe) {
+            } else if (!Main.cobbleMacro || !Config.INSTANCE.failSafe) {
                 ChatUtils.sendMessage("§fYou can not start the bot outside your island.");
             }
         } else if (keyBinds[9].isPressed()) {
@@ -274,9 +271,9 @@ public class Main {
                         : "§fYou have successfully §cDisabled §fSugarCane BOT.";
                 ChatUtils.sendMessage(str);
                 if (sugarCaneMacro) {
-                    NewSugarCaneMacro.startFarming();
+                    NewSugarCaneMacro.startMacro();
                 } else {
-                    NewSugarCaneMacro.stopFarming();
+                    NewSugarCaneMacro.stopMacro();
                     wasScane = false;
                 }
             } else if (!Main.sugarCaneMacro || !Config.INSTANCE.failSafe) {

@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static flexscript.Main.farmingMacro;
 
-public class FailSafeCobbleStone {
+public class FSCrops {
     private Thread thread;
 
     @SubscribeEvent
@@ -18,7 +18,7 @@ public class FailSafeCobbleStone {
             ChatUtils.sendMessage("§fFail Safe is triggered. You will be put in your island in few seconds.");
             Main.wasFarming = farmingMacro;
             farmingMacro = false;
-            NewFarmingMacro.stopFarming();
+            NewFarmingMacro.stopMacro();
 
             thread = new Thread(() -> {
                 try {
@@ -47,7 +47,7 @@ public class FailSafeCobbleStone {
 
     private void startIfShould(){
         if (Main.wasFarming) {
-            NewFarmingMacro.startFarming();
+            NewFarmingMacro.startMacro();
             Main.wasFarming = false;
         }
 

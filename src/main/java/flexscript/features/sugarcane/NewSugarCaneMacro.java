@@ -1,28 +1,28 @@
 package flexscript.features.sugarcane;
 
 import flexscript.Main;
-import flexscript.features.farming.NewFarmingMacro;
+import flexscript.config.Config;
 import flexscript.features.mouselocker.MouseLocker;
 import flexscript.utils.BlockUtils;
-import flexscript.utils.ChatUtils;
 import flexscript.utils.InventoryUtils;
 import flexscript.utils.Utils;
-import net.minecraft.block.Block;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.BlockPos;
+import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import static flexscript.utils.BlockUtils.getRelativeBlock;
+import java.util.Random;
+
 
 public class NewSugarCaneMacro {
     private static boolean left = true;
-    private static boolean forward = false;
     private static boolean sneak = false;
-    private static boolean goingForward = false;
-    private Block block;
+    private static boolean right = false;
 
-    private Thread thread;
+    private static int homeCounter = 0;
+
+    private static boolean shouldGoInLane = false;
+    private static boolean shouldSetSwitchTime = true;
 
     public static int startCounter = 0;
 
@@ -33,41 +33,14 @@ public class NewSugarCaneMacro {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (Main.sugarCaneMacro) {
-            if (BlockUtils.isWalkable(BlockUtils.getFrontBlock(1)) &&
-                    BlockUtils.isWalkable(BlockUtils.getFrontBlock(2)) &&
-                    BlockUtils.isWalkable(BlockUtils.getFrontBlock(3)) &&
-                    !goingForward) {
-                go3BlocksForward();
-            }
-            KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindAttack.getKeyCode(), true);
-            //KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindLeft.getKeyCode(), left);
-            //KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindRight.getKeyCode(), !left);
-            //Sneak and forward need to work together every time.
-            KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindForward.getKeyCode(), sneak);
-            KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindSneak.getKeyCode(), sneak);
-
+            setupKeys();
+            lineSwitcher();
 
         }
     }
 
 
-    private void go3BlocksForward() {
-        goingForward = true;
-        BlockPos blockPos = Main.mc.thePlayer.getPosition().add(0, 0, 3);
-        thread = new Thread(() -> {
-            while (Math.round(Main.mc.thePlayer.posZ) != blockPos.getZ()) {
-                sneak = true;
-            }
-            sneak = false;
-            goingForward = false;
-            Main.sugarCaneMacro = false;
-            ChatUtils.sendMessage(sneak + " " + goingForward + " "  + Main.sugarCaneMacro);
-        }, "thread");
-        thread.start();
-    }
-
-
-    public static void startFarming() {
+    public static void startMacro() {
         Main.sugarCaneMacro = true;
         MouseLocker.lockMouse();
 
@@ -75,10 +48,15 @@ public class NewSugarCaneMacro {
         startCounter = InventoryUtils.getCounter();
     }
 
-    public static void stopFarming() {
+    public static void stopMacro() {
+        left = true;
+        sneak = false;
+        right = false;
+        shouldGoInLane = false;
+        shouldSetSwitchTime = true;
+
         Main.sugarCaneMacro = false;
         MouseLocker.unLockMouse();
-        goingForward = false;
 
         KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindRight.getKeyCode(), false);
         KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindSneak.getKeyCode(), false);
@@ -87,4 +65,83 @@ public class NewSugarCaneMacro {
         KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindAttack.getKeyCode(), false);
     }
 
+    private void setupKeys() {
+        KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindAttack.getKeyCode(), true);
+        KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindForward.getKeyCode(), sneak);
+        KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindSneak.getKeyCode(), sneak);
+        KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindLeft.getKeyCode(), left);
+        KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindRight.getKeyCode(), right);
+    }
+
+    private void checkIfAlligned() {
+        if (!BlockUtils.isWalkable(BlockUtils.getLeftBlock())) {
+            if (BlockUtils.getRightTopBlock() == Blocks.reeds && shouldSetSwitchTime) {
+                currentTimeMillisSwitch = Utils.currentTimeMillis();
+                shouldSetSwitchTime = false;
+            }
+            if (BlockUtils.getRightTopBlock() == Blocks.reeds && Utils.currentTimeMillis() - currentTimeMillisSwitch >= 10) {
+                setHome();
+                shouldSetSwitchTime = true;
+                shouldGoInLane = true;
+
+                right = true;
+                left = false;
+                sneak = false;
+            }
+
+        }
+        if (!BlockUtils.isWalkable(BlockUtils.getRightBlock())) {
+            if (BlockUtils.getLeftTopBlock() == Blocks.reeds && shouldSetSwitchTime) {
+                currentTimeMillisSwitch = Utils.currentTimeMillis();
+                shouldSetSwitchTime = false;
+            }
+            if (BlockUtils.getLeftTopBlock() == Blocks.reeds && Utils.currentTimeMillis() - currentTimeMillisSwitch >= 10) {
+                setHome();
+                shouldSetSwitchTime = true;
+                shouldGoInLane = true;
+
+                right = false;
+                left = true;
+                sneak = false;
+            }
+
+        }
+
+
+    }
+
+    public void lineSwitcher() {
+        if (!BlockUtils.isWalkable(BlockUtils.getLeftBlock()) && !shouldGoInLane) {
+            sneak = true;
+            left = false;
+            right = false;
+            checkIfAlligned();
+        }
+        if (!BlockUtils.isWalkable(BlockUtils.getRightBlock()) && !shouldGoInLane) {
+            sneak = true;
+            left = false;
+            right = false;
+            checkIfAlligned();
+        }
+        if (BlockUtils.isWalkable(BlockUtils.getRightBlock()) && BlockUtils.isWalkable(BlockUtils.getLeftBlock())) {
+            shouldGoInLane = false;
+        }
+    }
+
+    public void setHome() {
+        homeCounter++;
+        if (homeCounter != 15) return;
+        homeCounter = 0;
+        int randomDelay = getRandomDelay();
+        if (Config.INSTANCE.autoSetHome && Utils.currentTimeMillis() - currentTimeMillisSetSpawn >= randomDelay) {
+            Main.mc.thePlayer.sendChatMessage("/setspawn");
+            currentTimeMillisSetSpawn = Utils.currentTimeMillis();
+        }
+    }
+
+    public final int getRandomDelay() {
+        return 1000 + (new Random().nextInt() % (2000 - 1000 + 1));
+    }
+
 }
+
