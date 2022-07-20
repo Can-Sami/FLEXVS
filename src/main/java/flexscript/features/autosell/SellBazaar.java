@@ -25,8 +25,8 @@ public class SellBazaar {
     public final void tick(TickEvent.ClientTickEvent event) {
         if(selling) return;
         if(Main.tickCount != 1) return;
-        if(!Config.INSTANCE.sellCobble || !Config.INSTANCE.sellFarming ) return;
-        if(!Main.cobbleMacro || !Main.farmingMacro || !Main.sugarCaneMacro) return;
+        if(!Config.INSTANCE.sellCobble && !Config.INSTANCE.sellFarming ) return;
+        if(!Main.cobbleMacro && !Main.farmingMacro && !Main.sugarCaneMacro) return;
         if(Main.mc.thePlayer.inventory.getFirstEmptyStack() == -1){
             ChatUtils.sendMessage("§f Auto Sell is starting in a moment...");
             cobble = Main.cobbleMacro;

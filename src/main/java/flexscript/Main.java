@@ -131,6 +131,7 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new FSCobbleStone());
         MinecraftForge.EVENT_BUS.register(new FSCrops());
         MinecraftForge.EVENT_BUS.register(new NewSugarCaneMacro());
+        MinecraftForge.EVENT_BUS.register(new SellBazaar());
 
 
         configFile.initialize();
