@@ -18,7 +18,7 @@ import flexscript.features.mithril.MithrilMacro;
 import flexscript.features.mithril.MithrilNuker;
 import flexscript.features.mithril.PinglessMining;
 import flexscript.features.autoreconnect.autoreconnect;
-import flexscript.features.autosell.SellCobblestone;
+import flexscript.features.autosell.SellBazaar;
 import flexscript.features.farming.CropNuker;
 import flexscript.features.foraging.ForagingNuker;
 import flexscript.features.hud.Render;
@@ -71,7 +71,6 @@ public class Main {
     public static boolean nukeBlocks = false;
     public static boolean nukeWood = false;
     public static boolean placeCane = false;
-    private static boolean firstLoginThisSession = true;
     private static boolean oldanim = false;
     public static boolean init = false;
     public static boolean mithrilMacro = false;
@@ -120,7 +119,7 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new ScoreboardUtils());
         MinecraftForge.EVENT_BUS.register(new InventoryCloser());
         MinecraftForge.EVENT_BUS.register(new FSSugarCane());
-        MinecraftForge.EVENT_BUS.register(new SellCobblestone());
+        MinecraftForge.EVENT_BUS.register(new SellBazaar());
         MinecraftForge.EVENT_BUS.register(new autoreconnect());
         MinecraftForge.EVENT_BUS.register(new ArmorStandESP());
         MinecraftForge.EVENT_BUS.register(new PowderMacro());
@@ -190,7 +189,7 @@ public class Main {
     }
 
     @SubscribeEvent
-    public void key(InputEvent.KeyInputEvent event) {
+    public void keyStroke(InputEvent.KeyInputEvent event) {
         if (!WhitelistHandler.Raw.contains(Minecraft.getMinecraft().thePlayer.getGameProfile().getId().toString()))
             return;
         if (keyBinds[0].isPressed()) {

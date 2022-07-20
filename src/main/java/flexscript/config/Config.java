@@ -106,6 +106,11 @@ public class Config extends Vigilant {
             category = "Cobblestone Macro", subcategory = "General")
     public boolean sellCobble = true;
 
+    @Property(type = PropertyType.SWITCH, name = "&bAuto Sell Crops", description = "Sells your Crops to Bazaar on full inventory. (REQUIRES COOKIE)",
+    category = "Farming", subcategory = "General")
+    public boolean sellFarming = true;
+
+
     @Property(type = PropertyType.SLIDER, name = "&bAnti Ghost Blocks Period", description = "in every how much Minutes you will go to Hub and come back.",
     category = "Cobblestone Macro", subcategory = "Ghost Blocks", max = 60 , min = 1)
     public int antiGhostPeriod = 30;
