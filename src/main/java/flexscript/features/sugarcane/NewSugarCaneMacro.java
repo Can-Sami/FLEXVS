@@ -5,6 +5,7 @@ import flexscript.config.Config;
 import flexscript.features.mouselocker.MouseLocker;
 import flexscript.utils.BlockUtils;
 import flexscript.utils.InventoryUtils;
+import flexscript.utils.ShadyRotation;
 import flexscript.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
@@ -35,7 +36,7 @@ public class NewSugarCaneMacro {
         if (Main.sugarCaneMacro) {
             setupKeys();
             lineSwitcher();
-
+            flip180Check();
         }
     }
 
@@ -141,6 +142,18 @@ public class NewSugarCaneMacro {
 
     public final int getRandomDelay() {
         return 1000 + (new Random().nextInt() % (2000 - 1000 + 1));
+    }
+
+    private static long currentTimeMillis180 = Utils.currentTimeMillis();
+
+    public static void flip180Check() {
+        if (Main.mc.thePlayer.posY != 0 && Main.mc.thePlayer.motionY <= -0.3 && Config.INSTANCE.drop180 && Utils.currentTimeMillis() - currentTimeMillis180 >= 15000) {
+            currentTimeMillis180 = Utils.currentTimeMillis();
+            float yaw = Main.mc.thePlayer.rotationYaw;
+            float pitch = Main.mc.thePlayer.rotationPitch;
+            ShadyRotation.Rotation rotation = new ShadyRotation.Rotation(pitch, yaw - 180);
+            ShadyRotation.smoothLook(rotation, Main.configFile.smoothLookVelocity, () -> {});
+        }
     }
 
 }
