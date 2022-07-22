@@ -13,7 +13,7 @@ public class BFFarming {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if(!Main.farmingMacro || !Main.sugarCaneMacro) return;
+        if(!Main.farmingMacro && !Main.sugarCaneMacro) return;
         if(!Config.INSTANCE.resync) return;
         if(Main.mc.theWorld == null) return;
         if(Main.mc.thePlayer == null) return;

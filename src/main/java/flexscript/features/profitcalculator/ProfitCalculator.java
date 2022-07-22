@@ -16,9 +16,9 @@ import static flexscript.Main.tempProfit;
 
 public class ProfitCalculator {
     public static  int lastCounter = 0;
-    public volatile static BasicState<String> realProfit = new BasicState<>("No Profit Made");
-    public volatile static BasicState<String> profitHour = new BasicState<>("No Profit Made");
-    public volatile static BasicState<String> MacroTime = new BasicState<>("Macro Timer: not running");
+    public volatile static BasicState<String> realProfit = new BasicState<>("§cNo Profit Made");
+    public volatile static BasicState<String> profitHour = new BasicState<>("§cNo Profit Made");
+    public volatile static BasicState<String> MacroTime = new BasicState<>("§cMacro Timer: not running");
     public static  double wartProfit = 0;
     public static  double wheatProfit = 0;
     public static  double caneProfit = 0;
@@ -35,12 +35,12 @@ public class ProfitCalculator {
     }
 
     public static void calculateProfit() {
-        if(!Main.farmingMacro || !Main.sugarCaneMacro) return;
+        if(!Main.farmingMacro && !Main.sugarCaneMacro) return;
         if(mc.theWorld == null) return;
         if(Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem() == null) return;
         final ItemStack held = mc.thePlayer.getHeldItem();
         if (held.getDisplayName().contains("Newton")) {
-            wartProfit = getCropDiff() * 2;
+            wartProfit = getCropDiff() * 3;
 
         } else if (held.getDisplayName().contains("Pythagorean")) {
             potatoProfit = getCropDiff() * 2.4;
@@ -56,9 +56,9 @@ public class ProfitCalculator {
 
         }
         totalProfit = wartProfit + wheatProfit + caneProfit + carrotProfit + potatoProfit + tempProfit;
-        realProfit.set("Total Profit Made: $" + Utils.formatNumber(Math.round(totalProfit)));
-        profitHour.set("Profit per Hour: $" + Utils.formatNumber(Math.round(profitHour(totalProfit))));
-        MacroTime.set("Macro Time: " + Utils.formatTime(macroTime()));
+        realProfit.set("Total Profit Made: §a$" + Utils.formatNumber(Math.round(totalProfit)));
+        profitHour.set("Profit per Hour: §a$" + Utils.formatNumber(Math.round(profitHour(totalProfit))));
+        MacroTime.set("Macro Time: §e" + Utils.formatTime(macroTime()));
 
     }
 

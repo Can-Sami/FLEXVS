@@ -18,7 +18,7 @@ public class Config extends Vigilant {
 
 
     public int lineWidth = 3;
-    
+
     @Property(type = PropertyType.SWITCH, name = "&bStatues HUD", description = "Shows some information in HUD.",
     category = "General", subcategory = "HUD Overlay")
     public boolean HUD = true;
@@ -130,11 +130,11 @@ public class Config extends Vigilant {
 
 
     @Property(type = PropertyType.SWITCH, name = "&bRandomized actions", description = "This will make u look less sus",
-            category = "Mining", subcategory = "Mithril")
+            category = "Mining", subcategory = "§aBETA §fMithril")
     public boolean mithrilLook = false;
 
-    @Property(type = PropertyType.SWITCH, name = "&bSkip Titanium", description = "Mithril nuker will ignore titanium",
-            category = "Mining", subcategory = "Mithril")
+    @Property(type = PropertyType.SWITCH, name = "&bIgnore Titanium", description = "Mithril nuker will ignore titanium",
+            category = "Mining", subcategory = "§aBETA §fMithril")
     public boolean ignoreTitanium = false;
 
     public boolean includeOres = false;
@@ -143,7 +143,7 @@ public class Config extends Vigilant {
     public boolean onlyOres = false;
 
     @Property(type = PropertyType.SELECTOR, name = "&bMithril Macro Priority", description = "Determine the order the macro will breaks blocks in",
-            category = "Mining", subcategory = "Mithril", options = {"Highest value to lowest", "Lowest value to highest","Any"})
+            category = "Mining", subcategory = "§aBETA §fMithril", options = {"Highest value to lowest", "Lowest value to highest","Any"})
     public int mithrilMacroPrio = 0;
 
     @Property(type = PropertyType.SWITCH, name = "&bPingless Mining", description = "Mines the next block before the previous block breaks, instabreak only",
