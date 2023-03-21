@@ -21,7 +21,6 @@ public class NewCobblestoneMacro {
     @SubscribeEvent
     public void blockCobble(@NotNull TickEvent.ClientTickEvent event) {
         if (Main.cobbleMacro) {
-            KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindAttack.getKeyCode(), true);
             KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindForward.getKeyCode(), true);
             if(Config.INSTANCE.shift){
                 KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindSneak.getKeyCode(), true);
@@ -63,6 +62,5 @@ public class NewCobblestoneMacro {
 
         KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindForward.getKeyCode(), false);
         KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindSneak.getKeyCode(), false);
-        KeyBinding.setKeyBindState(Main.mc.gameSettings.keyBindAttack.getKeyCode(), false);
     }
 }

@@ -10,6 +10,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.*;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
 
-public class CobbleNuker {
+public class CobblestoneMacroNuker {
     public static boolean enabled;
     private final ArrayList<BlockPos> broken = new ArrayList<>();
     public static BlockPos blockPos;

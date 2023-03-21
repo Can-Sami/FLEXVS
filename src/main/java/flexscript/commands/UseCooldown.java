@@ -140,41 +140,6 @@ public class UseCooldown implements ICommand {
             System.out.println("Error saving config file");
             error.printStackTrace();
         }
-        /*File rcfile = new File("./config/rosegoldaddons/rcmacro.txt");
-        BufferedWriter bf = null;
-        try {
-            bf = new BufferedWriter(new FileWriter(rcfile));
-            for (HashMap.Entry<String, Integer> entry : RCitems.entrySet()) {
-                bf.write(entry.getKey() + ":" + entry.getValue());
-                bf.newLine();
-            }
-            bf.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                bf.close();
-            } catch (Exception e) {
-            }
-        }
-        File lcfile = new File("./config/rosegoldaddons/lcmacro.txt");
-        BufferedWriter bf2 = null;
-        try {
-            bf2 = new BufferedWriter(new FileWriter(lcfile));
-            for (HashMap.Entry<String, Integer> entry : LCitems.entrySet()) {
-                bf2.write(entry.getKey() + ":" + entry.getValue());
-                bf2.newLine();
-            }
-            bf2.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                bf2.close();
-            } catch (Exception e) {
-            }
-        }*/
-    }
 
     @Override
     public int compareTo(@NotNull ICommand o) {
